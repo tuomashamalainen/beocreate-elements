@@ -1,2 +1,2 @@
-# BeoCreate Link
-BeoCreate Link can be used to set up a BeoCreate-based loudspeaker product. It is a collection of Node.js tools that interact with lower level Linux components, making it easy to use for beginners but extensible for tinkerers.
+# BeoCreate Elements
+BeoCreate Elements is an open-design sound system based on [BeoCreate 4-Channel Amplifier](http://www.hifiberry.com/beocreate/). This software package builds on *beocreate_essentials* developed for  [Project ReCreate](https://github.com/bang-olufsen/create), adding advanced graphical user interface for equaliser filters and other sound adjustments.
