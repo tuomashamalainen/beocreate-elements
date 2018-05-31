@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>BeoCreate Elements – A Scalable And Open Sound System | Bang &amp; Olufsen</title>
+	
+	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+	
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+	<meta name="apple-mobile-web-app-title" content="Elements" />
+		
+	<link rel="stylesheet" type="text/css" href="elements-demo.css" />
+	<script type="text/javascript" src="scripts/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript" src="scripts/jquery-ui.min.js"></script>
+	<script src='scripts/modernizr.js'></script>
+	<script src='scripts/fastclick.js'></script>
+	<!--[if lt IE 9]>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	
+	
+</head>
+<body>
+
+<header>
+	<img class="logo" src="bangolufsen.svg">
+</header>
+
+<div class="content-area">
+
+	<div id="slider-column">
+		<div class="menu-group">
+		<h2>Sheet</h2>
+		
+		<h3 class="before-slider">Width <span id="wall-width"><span class="value">100</span> cm</span></h3>
+		<div class="dimension-slider wall wall-width"></div>
+		<h3 class="before-slider">Height <span id="wall-height"><span class="value">100</span> cm</span></h3>
+		<div class="dimension-slider wall wall-height"></div>
+		
+		<div class="button" id="pegboard-toggle" onclick="togglePegboard();">Pegboard</div>
+		
+		</div>
+		<div class="menu-group">
+		<h2>Speaker</h2>
+		
+		<h3 class="before-slider">Width <span id="speaker-width"><span class="value">32</span> cm</span></h3>
+		<div class="dimension-slider speaker speaker-width"></div>
+		<h3 class="before-slider">Height <span id="speaker-height"><span class="value">32</span> cm</span></h3>
+		<div class="dimension-slider speaker speaker-height"></div>
+		
+		</div>
+	</div>
+	
+	<div id="visualiser-column">
+	
+		<div id="wall-dimension-control">
+			<div id="wall-pegboard" class="hidden"></div>
+			<div id="box-dimension-control">
+			 	<div class="dimension-box">
+			 		<div class="dimension-core"><img src="bangolufsen.svg"></div>
+			 		<div class="dimension-essence"></div>
+			 		
+			 		<div class="dimension-handle width drag-handle"></div>
+			 		<div class="dimension-handle height drag-handle"></div>
+			 		<div class="dimension-dot-pattern circular"></div>
+			 	</div>
+			 </div>
+		 </div>
+	
+	</div>
+	
+	<script src='scripts/elements-demo.js'></script>
+</body>
+</html>
+		

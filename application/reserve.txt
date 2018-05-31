@@ -1,0 +1,215 @@
+CHANNEL GUIDE
+
+
+					<div class="full-width speaker-terminal-guide-positioner help">
+								<div class="speaker-terminal-guide show-a show-b show-c show-d">
+									<div class="speaker-terminal-legend-overlay">
+										<div class="amp-section left a b">
+											
+											<div class="amp-channel left a">
+												<div class="amp-channel-letter">A<div class="power-rating">60W</div></div>
+												<img class="pol-left" src="symbols/polarity-plus.svg">
+												<img class="pol-right" src="symbols/polarity-minus.svg">
+											</div>
+											<div class="amp-channel right b">
+												<div class="amp-channel-letter">B<div class="power-rating">60W</div></div>
+												<img class="pol-left" src="symbols/polarity-plus.svg">
+												<img class="pol-right" src="symbols/polarity-minus.svg">
+											</div>
+										</div>
+										<div class="amp-section right c d">
+											<div class="amp-channel left c">
+												<div class="amp-channel-letter">C<div class="power-rating">30W</div></div>
+												<img class="pol-left" src="symbols/polarity-minus.svg">
+												<img class="pol-right" src="symbols/polarity-plus.svg">
+											</div>
+											<div class="amp-channel right d">
+												<div class="amp-channel-letter">D<div class="power-rating">30W</div></div>
+												<img class="pol-left" src="symbols/polarity-minus.svg">
+												<img class="pol-right" src="symbols/polarity-plus.svg">
+											</div>
+										</div>
+									</div>
+									<img src="4ca.png" class="main">
+								</div>
+					</div>
+					<div class="menu-group help">
+						<p>Each colour and letter represents a loudspeaker channel on BeoCreate 4-Channel Amplifier, as shown above.</p>
+						<p><span class="bold">For help with other options in this screen,</span> use the help buttons next to them.</p>
+					</div>
+					
+					<div id="dsp-guide" class="hidden">
+						
+						<div class="menu-group">
+							<h2>Understanding the Graphics</h2>
+							<p>Each colour and letter pair (A-D) represents an amplifier output on BeoCreate 4-Channel Amplifier. The physical connectors and their polarity can be identified using the picture above.</p>
+							<p>A brightly coloured curve on the graph represents the magnitude ("frequency") response of the channel of that colour, with frequency on the horizontal axis from 10 Hz to 20 kHz, and gain on the vertical axis from +15 dB to -15 dB.</p>
+							<p>A dimmer curve on the graph represents the phase response of the channel of that colour. This curve indicates the polarity of the output signal relative to the input signal. At ±180° the polarity is inverted.</p>
+						</div>
+						<!--<div class="menu-group">
+							<h2>Tips</h2>
+							<p>Keep an eye on the phase response curves when designing filters. You should attempt to align the curves with each other as closely as possible, so that different loudspeaker drivers are not working against one another in their common frequency band. Use the Flip Polarity feature to do this. The correct result is usually when the loudspeaker appears to sound the loudest.</p>
+							
+						</div>-->
+						<div class="menu-group">
+							<h2>Filter Controls</h2>
+							<p>The sliders are used to design the individual peak filters for each loudspeaker channel.</p>
+							<ul>
+								<li>Center frequency, in Hz, defines where the filter is placed on the sound spectrum.</li>
+								<li>Boost, in dB, defines the intensity of the filter. A positive value boosts the signal, while a negative value attenuates it.</li>
+								<li>Slope defines the bandwidth of the filter, expressed as Q or "quality factor". A larger value creates a narrower filter.</li>
+							</ul>
+							<p>In addition to the sliders, you can use the options under Tools to copy and paste settings to other filters or even other channels.</p>
+						</div>
+					</div>
+					
+					
+					
+OLD TYPE & ROLE
+
+
+<!--<div class="menu-group">
+						
+						
+						<div class="speaker-type-channels alternating">
+						
+						<div class="speaker-channel-item" id="speaker-type-channel-0">
+							<img class="speaker-driver-img" src="drivers/mid-full.png" onclick="advanceSpeakerType(0);">
+							<div class="section-2">
+								<div class="speaker-channel-title">
+									A
+									<div class="speaker-channel-dot dsp-colour red"></div>
+									
+								</div>
+								<div class="speaker-type-label">Full-range</div>
+							</div>
+							<div class="section-3">
+								<div class="segmented symbol">
+								<div onclick="ask('role-ask-menu', null, [function() {setSpeakerRole(0, 'left')}, function() {setSpeakerRole(0, 'right')}, function() {setSpeakerRole(0, 'mono')}]);" class="speaker-role-button">L</div>
+								<div ><img src="symbols-black/volume.svg"></div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="speaker-channel-item" id="speaker-type-channel-1">
+							<img class="speaker-driver-img" src="drivers/mid-full.png" onclick="advanceSpeakerType(1);">
+							<div class="section-2">
+								<div class="speaker-channel-title">
+									B
+									<div class="speaker-channel-dot dsp-colour yellow"></div>
+									
+								</div>
+								<div class="speaker-type-label">Full-range</div>
+							</div>
+							<div class="section-3">
+								<div class="segmented symbol">
+								<div onclick="ask('role-ask-menu', null, [function() {setSpeakerRole(1, 'left')}, function() {setSpeakerRole(1, 'right')}, function() {setSpeakerRole(1, 'mono')}]);" class="speaker-role-button">L</div>
+								<div ><img src="symbols-black/volume.svg"></div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="speaker-channel-item" id="speaker-type-channel-2">
+							<img class="speaker-driver-img" src="drivers/mid-full.png" onclick="advanceSpeakerType(2);">
+							<div class="section-2">
+								<div class="speaker-channel-title">
+									C
+									<div class="speaker-channel-dot dsp-colour green"></div>
+									
+								</div>
+								<div class="speaker-type-label">Full-range</div>
+							</div>
+							<div class="section-3">
+								<div class="segmented symbol">
+								<div onclick="ask('role-ask-menu', null, [function() {setSpeakerRole(2, 'left')}, function() {setSpeakerRole(2, 'right')}, function() {setSpeakerRole(2, 'mono')}]);" class="speaker-role-button">M</div>
+								<div ><img src="symbols-black/volume.svg"></div>
+								</div>
+							</div>
+						</div>
+						
+						<div class="speaker-channel-item" id="speaker-type-channel-3">
+							<img class="speaker-driver-img" src="drivers/mid-full.png" onclick="advanceSpeakerType(3);">
+							<div class="section-2">
+								<div class="speaker-channel-title">
+									D
+									<div class="speaker-channel-dot dsp-colour blue"></div>
+									
+								</div>
+								<div class="speaker-type-label">Full-range</div>
+							</div>
+							<div class="section-3">
+								<div class="segmented symbol">
+								<div onclick="ask('role-ask-menu', null, [function() {setSpeakerRole(3, 'left')}, function() {setSpeakerRole(3, 'right')}, function() {setSpeakerRole(3, 'mono')}]);" class="speaker-role-button">R</div>
+								<div ><img src="symbols-black/volume.svg"></div>
+								</div>
+							</div>
+						</div>
+						
+						</div>
+					</div>-->
+					
+					
+.speaker-channel-item {
+	display: flex;
+	padding-right: 20px;
+	margin-right: -20px;
+	margin-left: -20px;
+	padding-left: 7px;
+	height: 100px;
+}
+
+
+.speaker-channel-item .section-2 {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	margin-right: auto;
+}
+
+.speaker-channel-item .section-3 {
+	display: flex;
+	align-items: center;
+}
+
+.speaker-channel-item .section-3 .pill-button {
+	margin-left: 0.5em;
+	padding: 0.6em;
+}
+
+.speaker-driver-img {
+	width: 100px;
+	height: 100px;
+	display: block;
+	margin-right: 10px;
+	transition: filter 0.5s ease, transform 0.3s ease, box-shadow 0.3s ease;
+	margin-left: 5px;
+}
+
+.speaker-driver-img:active {
+	transition: none;
+	filter: brightness(0.8);
+	transform: scale(0.95);
+}
+
+.speaker-channel-item .speaker-channel-title {
+	display: flex;
+	flex-direction: row;
+	font-weight: 500;
+	align-items: center;
+}
+
+.speaker-channel-item .speaker-channel-dot {
+	width: 10px;
+	height: 10px;
+	border-radius: 50%;
+	margin-left: 0.4em;
+}
+
+.speaker-channel-item .speaker-type-label {
+	font-size: 0.8em;
+	font-weight: 500;
+	/*text-transform: uppercase;
+	letter-spacing: 0.1em;*/
+	opacity: 0.5;
+	margin-top: 0.3em;
+}

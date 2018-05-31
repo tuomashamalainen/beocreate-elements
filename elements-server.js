@@ -620,6 +620,10 @@ beoSources.on("metadata", function(event) {
 	beoCom.send({header: "metadata", content: event});
 });
 
+beoSources.on("playback", function(event) {
+	beoCom.send({header: "playback", content: event});
+});
+
 
 // WI-FI
 

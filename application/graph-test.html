@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Elements Graph</title>
+	
+	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="apple-mobile-web-app-title" content="Graph Test" />
+		
+	<link rel="stylesheet" type="text/css" href="graphtest2017.css" />
+	<script type="text/javascript" src="scripts/jquery-1.10.2.min.js"></script>
+	<script src='scripts/modernizr.js'></script>
+	<script src='scripts/fastclick.js'></script>
+	<script src='scripts/flotr2.min.js'></script>
+	<script src='scripts/math.min.js'></script>
+	<script src='scripts/jsdsp.js'></script>
+	<link rel="apple-touch-icon" href="apple-touch-icon.png?v=1.0" />
+	<!--[if lt IE 9]>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	
+	
+</head>
+
+<body>
+<h1>&nbsp;</h1>
+<div id="filter-controller">
+	<div id="graph-wrapper">
+	<div class="graph-labels-x">
+		<div id="x-0" class="label">10 Hz</div>
+		<div id="x-1" class="label">100</div>
+		<div id="x-2" class="label">1k</div>
+		<div id="x-3" class="label">10k</div>
+	</div>
+	<div class="graph-labels-y">
+		<div id="y-a-0" class="label">15 dB</div>
+		<div id="y-a-1" class="label">–15 dB</div>
+		<div id="y-b-0" class="label phase">180°</div>
+		<div id="y-b-1" class="label phase">–180°</div>
+	</div>
+	<div id="graph-container"></div>
+	</div>
+	
+	<div id="controller">
+		<div class="button" onclick="clearPlots();">Clear</div>
+		<div class="button" id="inverter" onclick="toggleInvert();">Invert Signal</div>
+		<div class="button" onclick="filter(0, 'hp', 500);">0: HP 500 Hz</div>
+		<div class="button" onclick="filter(1, 'lp', 3000);">1: LP 3000 Hz</div>
+		<div class="button" onclick="filter(2, 'peak', 1000, 5, 1.5);">2: Peak 1000 Hz, Q=1.5, +5</div>
+		<div class="button" onclick="filter(3, 'peak', 100, -5, 1.5);">3: Notch 100 Hz, Q=1.5, -5</div>
+		<div class="button" onclick="filter(4, 'peak', 10000, -5, 1.5);">3: Notch 10000 Hz, Q=1.5, -5</div>
+	</div>
+</div>
+
+<script src='scripts/graph-test.js'></script>
+</body>
+</html>

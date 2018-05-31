@@ -1,0 +1,141 @@
+body {
+	-webkit-user-drag: none;
+	color: black;
+	font-family: -apple-system, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-webkit-user-drag: none;
+	-webkit-user-select: none;
+	/*background-color: #eee;*/
+	margin: 0;
+	padding: 0;
+	/*background-color: #1a2a37;	*/
+	background-image: radial-gradient(ellipse farthest-corner, hsla(200, 20%, 90%, 0) 0%,
+		hsla(200, 20%, 90%, 0.002) 1.8%, 
+		hsla(200, 20%, 90%, 0.008) 4.8%, 
+		hsla(200, 20%, 90%, 0.021) 9%, 
+		hsla(200, 20%, 90%, 0.042) 13.9%, 
+		hsla(200, 20%, 90%, 0.075) 19.8%, 
+		hsla(200, 20%, 90%, 0.126) 27%, 
+		hsla(200, 20%, 90%, 0.194) 35%, 
+		hsla(200, 20%, 90%, 0.278) 43.5%, 
+		hsla(200, 20%, 90%, 0.382) 53%, 
+		hsla(200, 20%, 90%, 0.541) 66%, 
+		hsla(200, 20%, 90%, 0.738) 81%, 
+		hsl(200, 20%, 90%) 100% );
+}
+
+#graph-wrapper {
+	background-color: #32404b;
+	background-image: radial-gradient(circle farthest-corner, hsla(200, 20%, 90%, 0) 0%,
+		hsla(200, 20%, 10%, 0.002) 1.8%, 
+		hsla(200, 20%, 10%, 0.008) 4.8%, 
+		hsla(200, 20%, 10%, 0.021) 9%, 
+		hsla(200, 20%, 10%, 0.042) 13.9%, 
+		hsla(200, 20%, 10%, 0.075) 19.8%, 
+		hsla(200, 20%, 10%, 0.126) 27%, 
+		hsla(200, 20%, 10%, 0.194) 35%, 
+		hsla(200, 20%, 10%, 0.278) 43.5%, 
+		hsla(200, 20%, 10%, 0.382) 53%, 
+		hsla(200, 20%, 10%, 0.541) 66%, 
+		hsla(200, 20%, 10%, 0.738) 81%, 
+		hsl(200, 20%, 10%) 100% );
+		color: white;
+}
+
+#graph-container {
+	height: 200px;
+	-webkit-mask-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 0%, white 10%, white 90%, rgba(0, 0, 0, 0) 100%);
+}
+
+#graph-wrapper {
+	margin-bottom: 1em;
+	padding: 0.5em 0;
+	overflow: hidden;
+	position: relative;
+}
+
+.graph-labels-x {
+	position: absolute;
+	top: 50%;
+	right: 0;
+	left: 0;
+	color: white;
+	border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.graph-labels-y {
+	position: absolute;
+	left: 1%;
+	right: 1%;
+	color: rgba(255,255,255,0.3);
+	top: 0.5em;
+	bottom: 0.5em;
+}
+
+.graph-labels-x .label, .graph-labels-y .label {
+	position: absolute;
+	font-weight: 600;
+	font-size: 0.66em;
+}
+
+#x-0 {
+	margin-left: 1%;
+}
+
+#x-1 {
+	margin-left: 30.7%;
+}
+
+#x-2 {
+	margin-left: 61%;
+}
+
+#x-3 {
+	margin-left: 91.5%;
+}
+
+#y-a-0, #y-b-0 {
+	top: 0;
+}
+
+#y-a-1, #y-b-1 {
+	bottom: 0;
+}
+
+#y-b-0, #y-b-1 {
+	right: 0;
+}
+
+.graph-labels-y .phase {
+	color:rgba(255, 60, 101, 0.4);
+}
+
+
+.flotr-grid-label {
+	color: white;
+	font-weight: 600;
+	font-size: 0.66em;
+}
+
+.flotr-grid-label-x {
+	top: 51% !important;
+	position: absolute;
+}
+
+.flotr-grid-label-y {
+	padding-left: 0.5em;
+	margin-top: 3px;
+}
+
+.button {
+	background-color: rgba(0,0,0,0.1);
+	display: inline-block;
+	padding: 1em;
+	border-radius: 5px;
+	margin: 5px;
+}
+
+.inverted {
+	background-color: #0e77f4;
+	color: white;
+}

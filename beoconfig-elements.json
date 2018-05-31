@@ -1,0 +1,407 @@
+{
+	"systemInformation": {
+		"systemName": "BeoCreate Core",
+		"systemModelID": "beocreate-core-mk1"
+	},
+	"boxTool": {
+		"wooferCount": 1,
+		"x": 20,
+		"y": 40,
+		"z": 9
+	},
+	"toneTouch": {
+		"x": 0,
+		"y": 0,
+		"expand": 0
+	},
+	"channels": [
+		{
+			"registers": {
+				"filterRegisterPrefix": "EQS300MultiS8",
+				"msRegister": "DCInpAlg145X1.value",
+				"roleRegister": "monomuxSigma300ns4.index",
+				"hpFilterRegisterPrefix": "EQS300MultiS4",
+				"lpFilterRegisterPrefix": "EQS300MultiS12",
+				"muteRegister": "MuteNoSlewADAU145XAlg4.mute",
+				"invertRegister": "EQS300Invert7.invert"
+			},
+			"invert": false,
+			"mute": false,
+			"role": "left",
+			"type": "woofer",
+			"msRatio": 1,
+			"filterRegisterPrefix": "EQS300MultiS8",
+			"filters": [
+				{
+					"Fc": 1000,
+					"Q": 0.7,
+					"boost": 0,
+					"gain": 0,
+					"enabled": true
+				},
+				{
+					"Fc": 1000,
+					"Q": 0.7,
+					"boost": 0,
+					"gain": 0,
+					"enabled": true
+				},
+				{
+					"Fc": 1000,
+					"Q": 0.7,
+					"boost": 0,
+					"gain": 0,
+					"enabled": true
+				},
+				{
+					"Fc": 1000,
+					"Q": 0.7,
+					"boost": 0,
+					"gain": 0,
+					"enabled": true
+				},
+				{
+					"Fc": 1000,
+					"Q": 0.7,
+					"boost": 0,
+					"gain": 0,
+					"enabled": true
+				},
+				{
+					"Fc": 1000,
+					"Q": 0.7,
+					"boost": 0,
+					"gain": 0,
+					"enabled": true
+				},
+				{
+					"Fc": 1000,
+					"Q": 0.7,
+					"boost": 0,
+					"gain": 0,
+					"enabled": true
+				},
+				{
+					"Fc": 1000,
+					"Q": 0.7,
+					"boost": 0,
+					"gain": 0,
+					"enabled": true
+				},
+				{
+					"Fc": 1000,
+					"Q": 0.7,
+					"boost": 0,
+					"gain": 0,
+					"enabled": true
+				},
+				{
+					"Fc": 1000,
+					"Q": 0.7,
+					"boost": 0,
+					"gain": 0,
+					"enabled": true
+				}
+			],
+			"crossover": {
+				"hpFilterRegisterPrefix": "EQS300MultiS4",
+				"lpFilterRegisterPrefix": "EQS300MultiS12",
+				"hp": null,
+				"lp": null,
+				"hpType": "lr24",
+				"lpType": "lr24"
+			}
+		},
+		{
+			"registers": {
+				"filterRegisterPrefix": "EQS300MultiS7",
+				"msRegister": "DCInpAlg145X2.value",
+				"roleRegister": "monomuxSigma300ns3.index",
+				"hpFilterRegisterPrefix": "EQS300MultiS3",
+				"lpFilterRegisterPrefix": "EQS300MultiS11",
+				"muteRegister": "MuteNoSlewADAU145XAlg3.mute",
+				"invertRegister": "EQS300Invert5.invert"
+			},
+			"invert": false,
+			"mute": false,
+			"role": "right",
+			"type": "woofer",
+			"msRatio": 1,
+			"filterRegisterPrefix": "EQS300MultiS7",
+			"filters": [
+				{
+					"Fc": 1000,
+					"Q": 0.7,
+					"boost": 0,
+					"gain": 0,
+					"enabled": true
+				},
+				{
+					"Fc": 1000,
+					"Q": 0.7,
+					"boost": 0,
+					"gain": 0,
+					"enabled": true
+				},
+				{
+					"Fc": 1000,
+					"Q": 0.7,
+					"boost": 0,
+					"gain": 0,
+					"enabled": true
+				},
+				{
+					"Fc": 1000,
+					"Q": 0.7,
+					"boost": 0,
+					"gain": 0,
+					"enabled": true
+				},
+				{
+					"Fc": 1000,
+					"Q": 0.7,
+					"boost": 0,
+					"gain": 0,
+					"enabled": true
+				},
+				{
+					"Fc": 1000,
+					"Q": 0.7,
+					"boost": 0,
+					"gain": 0,
+					"enabled": true
+				},
+				{
+					"Fc": 1000,
+					"Q": 0.7,
+					"boost": 0,
+					"gain": 0,
+					"enabled": true
+				},
+				{
+					"Fc": 1000,
+					"Q": 0.7,
+					"boost": 0,
+					"gain": 0,
+					"enabled": true
+				},
+				{
+					"Fc": 1000,
+					"Q": 0.7,
+					"boost": 0,
+					"gain": 0,
+					"enabled": true
+				},
+				{
+					"Fc": 1000,
+					"Q": 0.7,
+					"boost": 0,
+					"gain": 0,
+					"enabled": true
+				}
+			],
+			"crossover": {
+				"hpFilterRegisterPrefix": "EQS300MultiS3",
+				"lpFilterRegisterPrefix": "EQS300MultiS11",
+				"hp": null,
+				"lp": null,
+				"hpType": "lr24",
+				"lpType": "lr24"
+			}
+		},
+		{
+			"registers": {
+				"filterRegisterPrefix": "EQS300MultiS6",
+				"msRegister": "DCInpAlg145X3.value",
+				"roleRegister": "monomuxSigma300ns2.index",
+				"hpFilterRegisterPrefix": "EQS300MultiS2",
+				"lpFilterRegisterPrefix": "EQS300MultiS10",
+				"muteRegister": "MuteNoSlewADAU145XAlg2.mute",
+				"invertRegister": "EQS300Invert3.invert"
+			},
+			"invert": false,
+			"mute": false,
+			"role": "left",
+			"type": "full-range",
+			"msRatio": 1,
+			"filterRegisterPrefix": "EQS300MultiS6",
+			"filters": [
+				{
+					"Fc": 1000,
+					"Q": 0.7,
+					"boost": 0,
+					"gain": 0,
+					"enabled": true
+				},
+				{
+					"Fc": 1000,
+					"Q": 0.7,
+					"boost": 0,
+					"gain": 0,
+					"enabled": true
+				},
+				{
+					"Fc": 1000,
+					"Q": 0.7,
+					"boost": 0,
+					"gain": 0,
+					"enabled": true
+				},
+				{
+					"Fc": 1000,
+					"Q": 0.7,
+					"boost": 0,
+					"gain": 0,
+					"enabled": true
+				},
+				{
+					"Fc": 1000,
+					"Q": 0.7,
+					"boost": 0,
+					"gain": 0,
+					"enabled": true
+				},
+				{
+					"Fc": 1000,
+					"Q": 0.7,
+					"boost": 0,
+					"gain": 0,
+					"enabled": true
+				},
+				{
+					"Fc": 1000,
+					"Q": 0.7,
+					"boost": 0,
+					"gain": 0,
+					"enabled": true
+				},
+				{
+					"Fc": 1000,
+					"Q": 0.7,
+					"boost": 0,
+					"gain": 0,
+					"enabled": true
+				},
+				{
+					"Fc": 1000,
+					"Q": 0.7,
+					"boost": 0,
+					"gain": 0,
+					"enabled": true
+				},
+				{
+					"Fc": 1000,
+					"Q": 0.7,
+					"boost": 0,
+					"gain": 0,
+					"enabled": true
+				}
+			],
+			"crossover": {
+				"hpFilterRegisterPrefix": "EQS300MultiS2",
+				"lpFilterRegisterPrefix": "EQS300MultiS10",
+				"hp": null,
+				"lp": null,
+				"hpType": "lr24",
+				"lpType": "lr24"
+			}
+		},
+		{
+			"registers": {
+				"filterRegisterPrefix": "EQS300MultiS5",
+				"msRegister": "DCInpAlg145X4.value",
+				"roleRegister": "monomuxSigma300ns1.index",
+				"hpFilterRegisterPrefix": "EQS300MultiS1",
+				"lpFilterRegisterPrefix": "EQS300MultiS9",
+				"muteRegister": "MuteNoSlewADAU145XAlg1.mute",
+				"invertRegister": "EQS300Invert1.invert"
+			},
+			"invert": false,
+			"mute": false,
+			"role": "right",
+			"type": "full-range",
+			"msRatio": 1,
+			"filterRegisterPrefix": "EQS300MultiS5",
+			"filters": [
+				{
+					"Fc": 1000,
+					"Q": 0.7,
+					"boost": 0,
+					"gain": 0,
+					"enabled": true
+				},
+				{
+					"Fc": 1000,
+					"Q": 0.7,
+					"boost": 0,
+					"gain": 0,
+					"enabled": true
+				},
+				{
+					"Fc": 1000,
+					"Q": 0.7,
+					"boost": 0,
+					"gain": 0,
+					"enabled": true
+				},
+				{
+					"Fc": 1000,
+					"Q": 0.7,
+					"boost": 0,
+					"gain": 0,
+					"enabled": true
+				},
+				{
+					"Fc": 1000,
+					"Q": 0.7,
+					"boost": 0,
+					"gain": 0,
+					"enabled": true
+				},
+				{
+					"Fc": 1000,
+					"Q": 0.7,
+					"boost": 0,
+					"gain": 0,
+					"enabled": true
+				},
+				{
+					"Fc": 1000,
+					"Q": 0.7,
+					"boost": 0,
+					"gain": 0,
+					"enabled": true
+				},
+				{
+					"Fc": 1000,
+					"Q": 0.7,
+					"boost": 0,
+					"gain": 0,
+					"enabled": true
+				},
+				{
+					"Fc": 1000,
+					"Q": 0.7,
+					"boost": 0,
+					"gain": 0,
+					"enabled": true
+				},
+				{
+					"Fc": 1000,
+					"Q": 0.7,
+					"boost": 0,
+					"gain": 0,
+					"enabled": true
+				}
+			],
+			"crossover": {
+				"hpFilterRegisterPrefix": "EQS300MultiS1",
+				"lpFilterRegisterPrefix": "EQS300MultiS9",
+				"hp": null,
+				"lp": null,
+				"hpType": "lr24",
+				"lpType": "lr24"
+			}
+		}
+	]
+}
