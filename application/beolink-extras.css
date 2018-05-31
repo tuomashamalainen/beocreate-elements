@@ -1,0 +1,123 @@
+/* @override 
+	http://localhost:8888/beolink-extras.css */
+
+body {
+	background-color: white;
+	-webkit-user-drag: none;
+	color: black;
+	font-family: -apple-system, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-webkit-user-drag: none;
+	-webkit-user-select: none;
+	/*background-color: #eee;*/
+	/*background-image: radial-gradient(ellipse farthest-corner, hsla(200, 20%, 90%, 0) 0%,
+		hsla(200, 20%, 90%, 0.002) 1.8%, 
+		hsla(200, 20%, 90%, 0.008) 4.8%, 
+		hsla(200, 20%, 90%, 0.021) 9%, 
+		hsla(200, 20%, 90%, 0.042) 13.9%, 
+		hsla(200, 20%, 90%, 0.075) 19.8%, 
+		hsla(200, 20%, 90%, 0.126) 27%, 
+		hsla(200, 20%, 90%, 0.194) 35%, 
+		hsla(200, 20%, 90%, 0.278) 43.5%, 
+		hsla(200, 20%, 90%, 0.382) 53%, 
+		hsla(200, 20%, 90%, 0.541) 66%, 
+		hsla(200, 20%, 90%, 0.738) 81%, 
+		hsl(200, 20%, 90%) 100% );*/
+}
+
+h1 {
+	text-align: center;
+	margin-top: 15vh;
+	text-transform: uppercase;
+	letter-spacing: 0.2em;
+	padding-left: 0.2em;
+	-webkit-transition: filter 0.3s ease;
+	margin-bottom: 0;
+	font-weight: 400;
+	font-size: 0.8em;
+}
+
+h2 {
+	text-align: center;
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+	padding-left: 0.1em;
+	-webkit-transition: filter 0.3s ease;
+	font-weight: 500;
+	font-size: 1.2em;
+	margin-top: 0.1em;
+}
+
+span.no-bold {
+	font-weight: 300;
+}
+
+#icon-area {
+	max-width: 500px;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 2em;
+}
+
+body:active .icon, body:active h1, body:active footer {
+	filter: blur(10px);
+	opacity: 0.5;
+}
+
+.icon {
+	width: 22px;
+	padding: 11px 14px 17px;
+	/*background-color: rgba(255,255,255,0.05);*/
+	display: block;
+	float: left;
+	margin: 5px;
+	border-radius: 5px;
+	-webkit-transition: filter 0.3s ease, -webkit-transform 0.2s ease, background-color 0.3s ease, opacity 0.3s ease;
+	overflow: hidden;
+	opacity: 1;
+	/*filter: invert(1);*/
+}
+
+.icon img {
+	display: block;
+}
+
+.icon span {
+	font-size: 3px;
+	display: block;
+	text-align: center;
+	margin: 4px -30px -4px;
+	height: 0;
+	opacity: 0;
+	-webkit-transition: opacity 0.3s ease;
+	text-transform: uppercase;
+	color: rgba(0,0,0,0.5);
+	font-weight: 600;
+	letter-spacing: 0.1em;
+	padding-left: 0.1em;
+}
+
+.icon:active span {
+	opacity: 1;
+}
+
+body:active .icon:active {
+	-webkit-transform: scale(5);
+	opacity: 0.8;
+	/*background-color: rgba(255,255,255,0.5);*/
+	filter: none;
+	-webkit-user-drag: none;
+	/*-webkit-backdrop-filter: blur(20px);*/
+}
+
+footer {
+	text-align: center;
+	font-size: 0.66em;
+	text-transform: uppercase;
+	font-weight: 600;
+	letter-spacing: 0.1em;
+	opacity: 0.5;
+	padding-bottom: 10%;
+	clear: both;
+	-webkit-transition: filter 0.3s ease;
+}

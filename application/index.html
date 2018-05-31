@@ -1,0 +1,2091 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Elements</title>
+	
+	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+	
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+	<meta name="apple-mobile-web-app-title" content="Elements" />
+		
+	<link rel="stylesheet" type="text/css" href="elements2017-n.css" />
+	<script type="text/javascript" src="scripts/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript" src="scripts/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="scripts/jquery.ui.touch-punch.min.js"></script>
+	<script src='scripts/modernizr.js'></script>
+	<script src='scripts/fastclick.js'></script>
+	<link rel="apple-touch-icon" href="apple-touch-icon.png?v=32453434" />
+	<!--[if lt IE 9]>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	
+	
+</head>
+<body class="disconnected playing">
+
+<nav id="tab-bar" class="disabled">
+		<ul>
+			<li id="tab-bar-item-0" class="tab-bar-item draggable" onclick="selectTab(0);">
+				<div class="notification-dot"></div>
+				<img src="symbols/controller.svg">
+				<span>Item 1</span>
+			</li>
+			<li id="tab-bar-item-1" class="tab-bar-item draggable" onclick="selectTab(1);">
+				<div class="notification-dot"></div>
+				<img src="symbols/volume.svg">
+				<span>Item 2</span>
+			</li>
+			<li id="tab-bar-item-2" class="tab-bar-item draggable" onclick="selectTab(2);">
+				<div class="notification-dot"></div>
+				<img src="symbols/puzzle.svg">
+				<span>Item 3</span>
+			</li>
+			<li id="tab-bar-item-3" class="tab-bar-item draggable" onclick="selectTab(3);">
+				<div class="notification-dot"></div>
+				<img src="symbols/wifi-3.svg">
+				<span>Item 4</span>
+			</li>
+			<li id="tab-bar-more" class="tab-bar-item" onclick="selectTab('more');">
+				<div class="notification-dot"></div>
+				<img src="symbols/more.svg">
+				<span>More</span>
+			</li>		
+		</ul>
+</nav>
+
+<img id="floating-icon" src="symbols-black/connect.svg">
+
+<nav id="guided-setup-bar">
+	<img class="symbol-button" src="symbols/delete-x.svg" onclick="ask('cancel-guide-ask-menu');">
+	<div>
+		<h1>Step 1 of 4</h1>
+		<h2>Guided Setup</h2>
+	</div>
+	<div class="pill-button blue" id="setup-bar-next">Next</div>
+</nav>
+
+<div id="chrome">
+	<div class="tab"> <!-- artwork-bg -->
+	
+		
+		<!--<div id="background-image-filter"></div>-->
+		
+		<div class="tab-content" id="tab-now-playing">
+		
+			<div id="now-playing-background">
+			
+				<div id="now-playing-background-image" class="artwork-bg visible"></div>
+				<div id="background-image-filter"></div>
+			</div>
+			
+			
+			
+			<div id="now-playing-content">
+			
+			<div id="filter-gradient-top"></div>
+			<div id="filter-gradient-bottom"></div>
+				<div id="top-text" class="logo" onclick="$('#top-text').toggleClass('logo');">
+					<div class="h1-wrap"><h1>&nbsp;</h1></div>
+					<div class="h2-wrap"><h2>&nbsp;</h2></div>
+					<img id="top-text-beo-logo" src="bangolufsen-w.svg">
+				</div>
+				
+				<!--<img id="controller" src="controller.svg">-->
+				<canvas id="controller-canvas" width="600" height="600"></canvas>
+				
+				<div id="volume-bar">
+					<div id="volume-fill"></div>
+					<div id="volume-level">45</div>
+				</div>
+				
+				<div id="now-playing-content-overlay"></div>
+			</div>
+			
+			
+			<div id="artwork-wrapper">
+				<img id="now-playing-artwork-shadow" class="artwork-img" src="samples/ram.jpg">
+				<img id="now-playing-artwork" class="artwork-img" src="samples/greatescape.jpg">
+				
+			</div>
+		</div>
+		
+		<div class="tab-content" id="tab-sound" data-main-menu="sound-main">
+			<div class="edge-swipe" id="sound-edge-swipe"></div>
+			<div class="menu-screen block" id="sound-main">
+			
+				<header>
+					<!--<img src="symbols/back.svg" class="symbol-button left">-->
+					<!--<div class="header-text-button right">Assist Me</div>-->
+					<h1>Sound</h1>
+				</header>
+				
+				<div class="scroll-area">
+				
+				
+					<div class="menu-group">
+						
+						<!--<div class="menu-button blue">
+							Start Server
+						</div>-->
+						
+						<h2>Quick Settings</h2>
+						
+						<div class="menu-item icon left chevron tab-bar-capable" onclick="menuTransition('sound-main','sound-preset-menu',1);" data-address="sound/sound-preset-menu">
+							<img class="menu-icon left" src="symbols-black/preset.svg">
+							<div class="menu-label">Sound Preset</div>
+							<!--<p>A preset will automatically apply the right sound adjustments for Bang &amp; Olufsen loudspeaker designs.</p>-->
+						</div>
+						
+						<div class="menu-item icon left chevron tab-bar-capable" onclick="menuTransition('sound-main','speaker-dimensions-menu',1);" data-address="sound/speaker-dimensions-menu">
+							<img class="menu-icon left" src="symbols-black/magic.svg">
+							<div class="menu-label">Loudspeaker Dimensions</div>
+							<!--<p>Specify the dimensions of the loudspeaker enclosure to fine-tune the sound preset.</p>-->
+						</div>
+					
+					</div>
+					<div class="menu-group">
+					
+						<h2>Adjustments</h2>
+						
+						<div class="menu-item icon left guide-hide chevron tab-bar-capable" onclick="menuTransition('sound-main','speaker-role-menu',1);" data-address="sound/speaker-role-menu">
+							<img class="menu-icon left" src="symbols-black/role.svg">
+							<div class="menu-label">Loudspeaker Setup</div>
+						</div>
+						
+						<div class="menu-item icon left guide-hide chevron tab-bar-capable" onclick="menuTransition('sound-main','tone-touch-menu',1);" data-address="sound/tone-touch-menu">
+							<img class="menu-icon left" src="symbols-black/tonetouch.svg">
+							<div class="menu-label">ToneTouch</div>
+							<!--<div class="menu-value">Off</div>-->
+						</div>
+						
+						
+						<div class="menu-item icon left guide-hide chevron tab-bar-capable" onclick="menuTransition('sound-main','arc-menu',1);" data-address="sound/arc-menu">
+							<img class="menu-icon left" src="symbols-black/room-eq.svg">
+							<div class="menu-label">Room Compensation</div>
+							<!--<div class="menu-value">Off</div>-->
+						</div>
+						
+					
+						
+					</div>
+					<div class="menu-group guide-hide">
+					
+						<h2>Advanced</h2>
+						
+						<div class="menu-item icon left chevron tab-bar-capable" data-address="sound/filter-menu" onclick="menuTransition('sound-main','filter-menu',1);">
+							<img class="menu-icon left" src="symbols-black/eq.svg">
+							<div class="menu-label">Crossover &amp; Filters</div>
+						</div>
+						
+						<div class="menu-item icon left chevron tab-bar-capable" data-address="sound/custom-dsp-menu" onclick="console.log('c');" onmousedown="console.log('d');" onmouseup="console.log('u');">
+							<img class="menu-icon left" src="symbols-black/dsp.svg">
+							<div class="menu-label">Custom DSP Program</div>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+			
+			
+			<div class="menu-screen hidden-right" id="sound-preset-menu" data-edge-swipe-previous="sound-main">
+			
+				<header>
+						
+							<img src="symbols/back.svg" class="symbol-button left" onclick="menuTransition('sound-preset-menu','sound-main',0);">
+							<!--<div class="header-text-button right">Assist Me</div>-->
+							<h1>Sound Preset</h1>
+							<img src="symbols/help.svg" class="symbol-button right help-button" onclick="help('presets');">
+					</header>
+					
+					<div id="sound-preset-tabs" class="tabs top">
+								<div id="sound-preset-custom-tab" onclick="selectScreenTab('sound-preset-screen-tabs','custom-presets-tab','sound-preset-tabs','sound-preset-custom-tab');" class="selected">
+									Custom
+								</div>
+								
+								<div id="sound-preset-beo-tab" onclick="selectScreenTab('sound-preset-screen-tabs','beo-presets-tab','sound-preset-tabs','sound-preset-beo-tab');">
+									Bang &amp; Olufsen
+								</div>
+								
+							</div>
+				
+					<div class="scroll-area top-tabs-scroll-area">
+					
+					<div class="screen-tabs" id="sound-preset-screen-tabs">
+						<div class="screen-tab" id="custom-presets-tab">
+						
+							<div class="menu-group hidden" id="custom-sound-preset-wrap">
+								<h2>Saved Presets</h2>
+								
+								<div id="custom-sound-preset-list">
+								
+									<div class="menu-item icon left checkbox">
+										<img class="menu-icon left checkmark" src="symbols-black/checkmark.svg">
+										<div class="menu-label">BeoCreate Core</div>
+									</div>
+									
+								</div>
+							
+							</div>
+							<div class="menu-group">
+								<h2 id="no-sound-presets-prompt">No Saved Presets</h2>
+								<div class="menu-item icon left" onclick="saveCustomSoundPreset();">
+									<img class="menu-icon left" src="symbols-black/add.svg">
+									<div class="menu-label">Save New Preset...</div>
+								</div>
+							</div>
+							
+							<div class="menu-group">
+								<h2>Templates</h2>
+								
+								
+								<div id="template-sound-preset-list">
+								
+									<div class="menu-item icon left checkbox">
+										<img class="menu-icon left checkmark" src="symbols-black/checkmark.svg">
+										<div class="menu-label">Basic 4-Channel Amplifier</div>
+									</div>
+									
+									<div class="menu-item icon left checkbox">
+										<img class="menu-icon left checkmark" src="symbols-black/checkmark.svg">
+										<div class="menu-label">2-Way Stereo</div>
+									</div>
+									
+									<div class="menu-item icon left checkbox">
+										<img class="menu-icon left checkmark" src="symbols-black/checkmark.svg">
+										<div class="menu-label">3-Way Loudspeaker</div>
+									</div>
+								</div>
+							
+							</div>
+						
+						</div>
+						
+						<div class="screen-tab hidden" id="beo-presets-tab">
+						
+							<div class="menu-group">
+								<h2>Magic Sound</h2>
+								
+								
+								<div id="custom-sound-preset-list">
+								
+									<div class="menu-item icon left checkbox">
+										<img class="menu-icon left checkmark" src="symbols-black/checkmark.svg">
+										<div class="menu-label">BeoCreate Elements</div>
+										<p>A scalable and open loudspeaker.</p>
+									</div>
+									
+								</div>
+							
+							</div>
+							
+							<div class="menu-group">
+								<h2>Vintage</h2>
+								<p>Upcycled passive Bang &amp; Olufsen loudspeakers. For guides, visit www.hifiberry.com/beocreate</p>
+								
+								<div id="recreate-preset-list">
+								
+									<div class="menu-item icon left checkbox">
+										<img class="menu-icon left checkmark" src="symbols-black/checkmark.svg">
+										<div class="menu-label">Beovox CX50</div>
+									</div>
+									
+									<div class="menu-item icon left checkbox">
+										<img class="menu-icon left checkmark" src="symbols-black/checkmark.svg">
+										<div class="menu-label">Beovox CX100</div>
+									</div>
+								</div>
+							
+							</div>
+							
+						</div>
+					
+					</div>
+					
+					</div>
+			</div>
+			
+			
+			<div class="menu-screen hidden-right" id="speaker-dimensions-menu" data-edge-swipe-previous="sound-main">
+			
+				<header>
+					<img src="symbols/back.svg" class="symbol-button left" onclick="menuTransition('speaker-dimensions-menu','sound-main',0);">
+					<!--<div class="header-text-button right">Assist Me</div>-->
+					<h1>Dimensions</h1>
+				</header>
+				
+				<div class="scroll-area">
+				
+					
+				
+					
+					
+					<!--<div class="segmented blue" id="box-selector">
+								<div class="selected" id="box-selector-item-0" onclick="selectBoxVariant(0);">2 Drivers</div>
+								<div id="box-selector-item-1" onclick="selectBoxVariant(1);">3 Drivers</div>
+							</div>-->
+					
+					<!--<div id="box-visualiser" class="two-way">
+					 <img src="dim-two-way.png">
+					 </div>-->
+					 
+					 <div class="menu-group control-squares">
+								
+								<div class="control-square" id="speaker-width-control-square" onclick="startSpeakerDimensionFineAdjustment('w');">
+									<h2>Width</h2>
+									<div class="value">32</div>
+									<div>cm</div>
+								</div>
+								
+								<div class="control-square" id="speaker-height-control-square" onclick="startSpeakerDimensionFineAdjustment('h');">
+									<h2>Height</h2>
+									<div class="value">32</div>
+									<div>cm</div>
+								</div>
+								
+								<div class="control-square static" id="speaker-volume-control-square">
+									<h2>Volume</h2>
+									<div class="value">5</div>
+									<div>litres</div>
+								</div>
+						</div>
+					 
+					 <div id="box-dimension-control">
+					 	<div class="dimension-box">
+					 		<div class="dimension-core"><img src="bangolufsen.svg"></div>
+					 		<div class="dimension-essence"></div>
+					 		
+					 		<div class="dimension-handle width drag-handle"></div>
+					 		<div class="dimension-handle height drag-handle"></div>
+					 		<div class="dimension-dot-pattern circular"></div>
+					 	</div>
+					 </div>
+					 
+					 <div class="menu-group">
+					 	<div id="magic-sound-calc-button" class="pill-button black menu-button">Apply Sound Adjustments</div>
+					 </div>
+				</div>
+			</div>
+			
+			
+			<div class="menu-screen hidden-right" id="speaker-role-menu" data-edge-swipe-previous="sound-main">
+			
+				<header>
+					<img src="symbols/back.svg" class="symbol-button left" onclick="menuTransition('speaker-role-menu','sound-main',0);">
+					<!--<div class="header-text-button right">Assist Me</div>-->
+					<h1>Speaker Setup</h1>
+					<img src="symbols/help.svg" class="symbol-button right help-button" onclick="help('4ca-legend');">
+				</header>
+				
+				<div id="speaker-role-tabs" class="tabs top">
+								<div id="speaker-role-type-tab" onclick="speakerSetupMode(0);" class="selected">
+									Type
+								</div>
+								
+								<div id="speaker-role-role-tab" onclick="speakerSetupMode(1);">
+									Role
+								</div>
+								
+								<div id="speaker-role-levels-tab" onclick="speakerSetupMode(2);">
+									Level
+								</div>
+								
+								<div id="speaker-role-more-tab" onclick="speakerSetupMode(3);">
+									More
+								</div>
+								
+							</div>
+				
+				<div class="scroll-area top-tabs-scroll-area">
+				
+					<div class="menu-group" id="speaker-setup-titles">
+					
+						<h2 id="speaker-setup-type-title">Loudspeaker Type<img src="symbols-black/help.svg" class="symbol-button help-button" onclick="help('speaker-type');"></h2>
+						
+						<h2 id="speaker-setup-role-title" class="hidden">Loudspeaker Role<img src="symbols-black/help.svg" class="symbol-button help-button" onclick="help('speaker-role');"></h2>
+						
+						<h2 id="speaker-setup-levels-title" class="hidden">Relative Volume Level<img src="symbols-black/help.svg" class="symbol-button help-button" onclick="help('speaker-level');"></h2>
+						
+						<h2 id="speaker-setup-more-title" class="hidden">More Options<img src="symbols-black/help.svg" class="symbol-button help-button" onclick="help('speaker-more-options');"></h2>
+					
+					</div>
+					<div class="menu-group">
+						
+						<div class="speaker-type-channels alternating type" id="speaker-setup-container">
+						
+							<div class="speaker-channel-item speaker-type-channel" id="speaker-type-channel-0">
+								<div class="speaker-driver-wrap">
+									<img class="speaker-driver-img" src="drivers/mid-full.png" onclick="showSpeakerTypeSheet(0);">
+								</div>
+								<div class="speaker-channel-title">
+									A
+									<div class="speaker-channel-dot dsp-colour red"></div>
+								</div><div class="speaker-type-label">Full-range</div>
+								<div class="speaker-role-label">L</div>
+								
+								<div class="speaker-role-selector-wrap">
+									<div class="speaker-role-selector segmented black">
+										<div class="role-l" onclick="setSpeakerRole(0, 'left');">Left</div>
+										<div class="role-m" onclick="setSpeakerRole(0, 'mono');">Mono</div>
+										<div class="role-r" onclick="setSpeakerRole(0, 'right');">Right</div>
+									</div>
+								</div> 
+								
+								<div class="speaker-level-wrap">
+									<div class="speaker-level-slider red" id="speaker-level-slider-0"></div>
+								</div>
+								
+								<div class="speaker-enabled">
+									<img class="symbol-button" src="symbols-black/volume.svg">
+								</div>
+							</div>
+							
+							<div class="speaker-channel-item speaker-type-channel" id="speaker-type-channel-1">
+								<div class="speaker-driver-wrap">
+									<img class="speaker-driver-img" src="drivers/mid-full.png" onclick="showSpeakerTypeSheet(1);">		
+								</div>	
+								<div class="speaker-channel-title">
+									B
+									<div class="speaker-channel-dot dsp-colour yellow"></div>
+								</div><div class="speaker-type-label">Full-range</div>
+								<div class="speaker-role-label">R</div>
+								
+								<div class="speaker-role-selector-wrap">
+									<div class="speaker-role-selector segmented black">
+										<div class="role-l" onclick="setSpeakerRole(1, 'left');">Left</div>
+										<div class="role-m" onclick="setSpeakerRole(1, 'mono');">Mono</div>
+										<div class="role-r" onclick="setSpeakerRole(1, 'right');">Right</div>
+									</div>
+								</div> 
+								
+								<div class="speaker-level-wrap">
+									<div class="speaker-level-slider yellow" id="speaker-level-slider-1"></div>
+								</div>
+								
+								<div class="speaker-enabled">
+									<img class="symbol-button" src="symbols-black/volume.svg">
+								</div>
+							</div>
+							
+							<div class="speaker-channel-item speaker-type-channel" id="speaker-type-channel-2">
+								<div class="speaker-driver-wrap">
+									<img class="speaker-driver-img" src="drivers/mid-full.png" onclick="showSpeakerTypeSheet(2);">
+								</div>
+								<div class="speaker-channel-title">
+									C
+									<div class="speaker-channel-dot dsp-colour green"></div>
+								</div><div class="speaker-type-label">Full-range</div>
+								<div class="speaker-role-label">L</div>
+								
+								<div class="speaker-role-selector-wrap">
+									<div class="speaker-role-selector segmented black">
+										<div class="role-l" onclick="setSpeakerRole(2, 'left');">Left</div>
+										<div class="role-m" onclick="setSpeakerRole(2, 'mono');">Mono</div>
+										<div class="role-r" onclick="setSpeakerRole(2, 'right');">Right</div>
+									</div>
+								</div> 
+								
+								<div class="speaker-level-wrap">
+									<div class="speaker-level-slider green" id="speaker-level-slider-2"></div>
+								</div>
+								
+								<div class="speaker-enabled">
+									<img class="symbol-button" src="symbols-black/volume.svg">
+								</div>
+							</div>
+							
+							<div class="speaker-channel-item speaker-type-channel" id="speaker-type-channel-3">
+								<div class="speaker-driver-wrap">
+									<img class="speaker-driver-img" src="drivers/mid-full.png" onclick="showSpeakerTypeSheet(3);">
+								</div>
+								<div class="speaker-channel-title">
+									D
+									<div class="speaker-channel-dot dsp-colour blue"></div>
+								</div><div class="speaker-type-label">Full-range</div>
+								<div class="speaker-role-label">R</div>
+								
+								<div class="speaker-role-selector-wrap">
+									<div class="speaker-role-selector segmented black">
+										<div class="role-l" onclick="setSpeakerRole(3, 'left');">Left</div>
+										<div class="role-m" onclick="setSpeakerRole(3, 'mono');">Mono</div>
+										<div class="role-r" onclick="setSpeakerRole(3, 'right');">Right</div>
+									</div> 
+								</div>
+								
+								<div class="speaker-level-wrap">
+									<div class="speaker-level-slider blue" id="speaker-level-slider-3"></div>
+								</div>
+								
+								<div class="speaker-enabled">
+									<img class="symbol-button" src="symbols-black/volume.svg">
+								</div>
+							</div>
+						
+						</div>
+					</div>
+						
+				</div>
+			</div>
+			
+			
+			<div class="menu-screen hidden-right" id="tone-touch-menu" data-edge-swipe-previous="sound-main">
+			
+				<header>
+					<img src="symbols/back.svg" class="symbol-button left" onclick="menuTransition('tone-touch-menu','sound-main',0);">
+					
+					<h1>ToneTouch</h1>
+					<img src="symbols/help.svg" class="symbol-button right help-button" onclick="help('tone-touch');">
+				</header>
+				
+				<div class="scroll-area" id="tone-touch-scroll-area">
+					<div id="tone-touch-bg"></div>
+					<div id="tone-touch-area">
+						<div class="tone-touch-field upper left" id="tone-touch-field-1">Warm</div>
+						<div class="tone-touch-field upper right" id="tone-touch-field-2">Excited</div>
+						<div class="tone-touch-field lower left" id="tone-touch-field-1">Relaxed</div>
+						<div class="tone-touch-field lower right" id="tone-touch-field-1">Bright</div>
+					</div>
+					<div id="tone-touch-dot" class="drag-handle"><span>Off</span>
+						<div id="tone-touch-scale-area"></div>
+					</div>
+				</div>
+			</div>
+			
+			
+			<div class="menu-screen hidden-right" id="arc-menu" data-edge-swipe-previous="sound-main">
+			
+				<header class="graph-header">
+						<div id="arc-graph" class="graph">
+						
+							<div class="graph-wrapper">
+							<div class="graph-labels-x">
+								<div class="graph-zero-x"></div>
+								<div class="x-0 label">10 Hz</div>
+								<div class="x-1 label">100</div>
+								<div class="x-2 label">1k</div>
+								<div class="x-3 label">10k</div>
+							</div>
+							<div class="graph-labels-y">
+								<div class="y-a-0 label">15 dB</div>
+								<div class="y-a-1 label">–15 dB</div>
+								<div class="y-b-0 label phase">180°</div>
+								<div class="y-b-1 label phase">–180°</div>
+							</div>
+							<div id="arc-graph-container-back" class="graph-container-back"></div>
+							<div id="arc-graph-container" class="graph-container"></div>
+						</div>
+						
+						</div>
+						
+						<div class="header-controls">
+							<img src="symbols/back.svg" class="symbol-button left" onclick="menuTransition('arc-menu','sound-main',0);">
+							<!--<div class="header-text-button right">Assist Me</div>-->
+							<h1>Room Compensation</h1>
+							<img src="symbols/help.svg" class="symbol-button right help-button" onclick="help('arc');">
+						</div>
+					</header>
+					
+					<div id="arc-tabs" class="tabs top">
+								<div id="arc-measurements" onclick="selectScreenTab('arc-screen-tabs', 'arc-measurements-tab', 'arc-tabs', 'arc-measurements');">
+									Measurements
+								</div>
+								
+								<div id="arc-compensation" onclick="selectScreenTab('arc-screen-tabs', 'arc-compensation-tab', 'arc-tabs', 'arc-compensation');" class="selected">
+									Compensation
+								</div>
+								
+							</div>
+				
+					<div class="scroll-area graph-scroll-area">
+					
+					<div class="screen-tabs" id="arc-screen-tabs">
+						<div class="screen-tab" id="arc-compensation-tab">
+						
+							<div class="menu-group">
+								<h2>Presets</h2>
+								<div class="menu-item icon left checkbox checked" id="arc-preset-off">
+									<img class="menu-icon left" src="symbols-black/checkmark.svg">
+									<div class="menu-label">Off</div>
+								</div>
+								<div id="arc-preset-list">
+								
+									<div class="menu-item icon left checkbox">
+										<img class="menu-icon left" src="symbols-black/checkmark.svg">
+										<div class="menu-label">Sofa Center</div>
+									</div>
+									
+									<div class="menu-item icon left checkbox">
+										<img class="menu-icon left" src="symbols-black/checkmark.svg">
+										<div class="menu-label">Whole Room</div>
+									</div>
+								</div>
+							
+							</div>
+							<div class="menu-group">
+								<div class="menu-item icon left">
+									<img class="menu-icon left" src="symbols-black/add.svg">
+									<div class="menu-label">Create Preset...</div>
+								</div>
+							</div>
+						
+						</div>
+						
+						<div class="screen-tab hidden" id="arc-measurements-tab">
+						
+						</div>
+						
+					
+					</div>
+			</div>
+			
+			</div>
+			
+			<div class="menu-screen hidden-right" id="filter-menu" data-edge-swipe-previous="sound-main">
+			
+				<header class="graph-header">
+						<div id="dsp-graph" class="graph">
+						
+							<div class="graph-wrapper">
+							<div class="graph-labels-x">
+								<div class="graph-zero-x"></div>
+								<div class="x-0 label">10 Hz</div>
+								<div class="x-1 label">100</div>
+								<div class="x-2 label">1k</div>
+								<div class="x-3 label">10k</div>
+							</div>
+							<div class="graph-labels-y">
+								<div class="y-a-0 label">15 dB</div>
+								<div class="y-a-1 label">–15 dB</div>
+								<div class="y-b-0 label phase">180°</div>
+								<div class="y-b-1 label phase">–180°</div>
+							</div>
+							<div id="dsp-graph-container-back" class="graph-container-back"></div>
+							<div id="dsp-graph-container" class="graph-container"></div>
+							<div id="graph-filter-peak-dot" class="dsp-colour"></div>
+							<div id="graph-tooltip" class="fc-boost">
+								<div class="tooltip-content fc-boost">
+									<div id="graph-tooltip-hz"><span>10000</span> <div>Hz</div></div>
+									<div id="graph-tooltip-boost"><span>5.3</span> <div>dB</div></div>
+								</div>
+								<div class="tooltip-content q">
+									<div id="graph-tooltip-q"><div>Q</div> <span>0.78</span></div>
+								</div>
+							</div>
+							<div id="graph-hint"><img src="symbols/move.svg">Move and scale</div>
+						</div>
+						
+						</div>
+						
+						<div class="header-controls">
+							<img src="symbols/back.svg" class="symbol-button left" onclick="menuTransition('filter-menu','sound-main',0);">
+							<!--<div class="header-text-button right">Assist Me</div>-->
+							<h1 onclick="loadTestGraphs();" class="fadeout">Filters</h1>
+							<img src="symbols/help.svg" class="symbol-button right help-button" onclick="help('graphs');">
+						</div>
+					</header>
+					
+				<div id="dsp-channel-select" class="tabs top">
+								<div class="selected selected-grey" id="dsp-ch-all" onclick="selectDSPChannel();">All
+								</div>
+								<div id="dsp-ch-a" class="selected-red dsp-ch hold-menu" data-hold="filter-copy-paste" onclick="selectDSPChannel(0);">
+									<div class="name">A</div>
+									<div class="colour-dot dsp-colour red"></div>
+									<!--<div class="colour-dot phase dsp-colour red-light"></div>-->
+									
+								</div>
+								<div id="dsp-ch-b" class="selected-yellow dsp-ch hold-menu" data-hold="filter-copy-paste" onclick="selectDSPChannel(1);">
+									<div class="name">B</div>
+									<div class="colour-dot dsp-colour yellow"></div>
+									<!--<div class="colour-dot phase dsp-colour yellow-light"></div>-->
+									
+								</div>
+								<div id="dsp-ch-c" class="selected-green dsp-ch hold-menu" data-hold="filter-copy-paste" onclick="selectDSPChannel(2);">
+									<div class="name">C</div>
+									<div class="colour-dot dsp-colour green"></div>
+									<!--<div class="colour-dot phase dsp-colour green-light"></div>-->
+									
+								</div>
+								<div id="dsp-ch-d" class="selected-blue dsp-ch hold-menu" data-hold="filter-copy-paste" onclick="selectDSPChannel(3);">
+									<div class="name">D</div>
+									<div class="colour-dot dsp-colour blue"></div>
+									<!--<div class="colour-dot phase dsp-colour blue-light"></div>-->
+									
+								</div>
+							</div>
+					
+				
+				<div class="scroll-area graph-scroll-area">
+				
+					
+					
+					<div class="screen-tabs" id="dsp-screen-tabs">
+					
+					<div class="screen-tab" id="dsp-all-tab">
+						<div class="menu-group">
+							<h1>All Channels</h1>
+							<h2>Crossover<img src="symbols-black/help.svg" class="symbol-button help-button" onclick="help('crossover');"></h2>
+						</div>
+						<div class="menu-group alternating">	
+							<div class="slider-group">
+								
+								<div class="crossover-slider red" id="crossover-slider-0"></div>
+								
+								<div class="control-group">
+									
+									<img class="symbol-button" onclick="startCrossoverFineAdjustment(0, 0);" src="symbols-black/highpass.svg">
+									<img class="symbol-button invert-channel-0" onclick="invertChannel(0);" src="symbols-black/invert.svg">
+									<img class="symbol-button" onclick="startCrossoverFineAdjustment(0, 1);" src="symbols-black/lowpass.svg">
+								</div>
+								
+							</div>
+						
+							<div class="slider-group">
+								
+								<div class="crossover-slider yellow" id="crossover-slider-1"></div>
+								
+								<div class="control-group">
+									
+									<img class="symbol-button" onclick="startCrossoverFineAdjustment(1, 0);" src="symbols-black/highpass.svg">
+									<img class="symbol-button invert-channel-1" onclick="invertChannel(1);" src="symbols-black/invert.svg">
+									<img class="symbol-button" onclick="startCrossoverFineAdjustment(1, 1);" src="symbols-black/lowpass.svg">
+								</div>
+								
+							</div>
+							
+							<div class="slider-group">
+								
+								<div class="crossover-slider green" id="crossover-slider-2"></div>
+								
+								<div class="control-group">
+									
+									<img class="symbol-button" onclick="startCrossoverFineAdjustment(2, 0);" src="symbols-black/highpass.svg">
+									<img class="symbol-button invert-channel-2" onclick="invertChannel(2);" src="symbols-black/invert.svg">
+									<img class="symbol-button" onclick="startCrossoverFineAdjustment(2, 1);" src="symbols-black/lowpass.svg">
+								</div>
+								
+							</div>
+						
+							<div class="slider-group">
+								
+								<div class="crossover-slider blue" id="crossover-slider-3"></div>
+								
+								<div class="control-group">
+									
+									<img class="symbol-button" onclick="startCrossoverFineAdjustment(3, 0);" src="symbols-black/highpass.svg">
+									<img class="symbol-button invert-channel-3" onclick="invertChannel(3);" src="symbols-black/invert.svg">
+									<img class="symbol-button" onclick="startCrossoverFineAdjustment(3, 1);" src="symbols-black/lowpass.svg">
+								</div>
+								
+							</div>
+						</div>
+						<!--<div class="menu-group">
+							<h2>Invert Signal</h2>
+							<p class="help">Flips the phase of a loudspeaker channel by 180°. This means that where a loudspeaker would normally push air out, it will instead pull it in, and reverse.</p>
+							<p class="help">This is often used to better align the phase response curves of different loudspeaker drivers with each other. If you use this feature, it is generally better to use it on drivers that play higher frequencies, because the phase inversion is less noticeable.</p>
+							<div class="segmented" id="invert-selector">
+								<div class="selected-red invert-channel-0" onclick="invertChannel(0);">A</div>
+								<div class="selected-yellow invert-channel-1" onclick="invertChannel(1);">B</div>
+								<div class="selected-green invert-channel-2" onclick="invertChannel(2);">C</div>
+								<div class="selected-blue invert-channel-3" onclick="invertChannel(3);">D</div>
+							</div>
+							
+						</div>-->
+						
+						<!--<div class="menu-group">
+							<h2>Tools</h2>
+							
+							<div class="menu-item icon left">
+								<img class="menu-icon left" src="symbols-black/flatten.svg">
+								<div class="menu-label">Flatten Filters...</div>
+							</div>
+							
+							
+						</div>-->
+					</div>
+					
+					<div id="dsp-single-tab" class="screen-tab hidden">
+						<h1 id="dsp-channel-header"><span>Channel A</span><img src="symbols-black/help.svg" class="symbol-button help-button" onclick="help('filters');"></h1>
+						<div class="menu-group no-padding menu-selector-group" id="filter-selector-group">
+							<div id="filter-selector-scroller" class="menu-selector-scroller">
+							<div id="filter-selector-wrap" class="menu-selector-wrap">
+							<div id="filter-selector" class="menu-selector">
+								<div class="selected dsp-filter hold-menu" data-hold="filter-copy-paste" id="filter-selector-item-0" onclick="selectFilter(4);">
+									<div class="filter-title">
+										<span class="filter-text">EQ</span>
+										<span class="filter-number">1</span>
+									</div>
+									<div class="filter-value">1000</div>
+								</div>
+								<div id="filter-selector-item-1" class="dsp-filter hold-menu" data-hold="filter-copy-paste" onclick="selectFilter(5);">
+									<div class="filter-title">
+										<span class="filter-text">EQ</span>
+										<span class="filter-number">2</span>
+									</div>
+									<div class="filter-value">1000</div>
+								</div>
+								<div id="filter-selector-item-2" class="dsp-filter hold-menu" data-hold="filter-copy-paste" onclick="selectFilter(6);">
+									<div class="filter-title">
+										<span class="filter-text">EQ</span>
+										<span class="filter-number">3</span>
+									</div>
+									<div class="filter-value">1000</div>
+								</div>
+								<div id="filter-selector-item-3" class="dsp-filter hold-menu" data-hold="filter-copy-paste" onclick="selectFilter(7);">
+									<div class="filter-title">
+										<span class="filter-text">EQ</span>
+										<span class="filter-number">4</span>
+									</div>
+									<div class="filter-value">1000</div>
+								</div>
+								<div id="filter-selector-item-4" class="dsp-filter hold-menu" data-hold="filter-copy-paste" onclick="selectFilter(8);">
+									<div class="filter-title">
+										<span class="filter-text">EQ</span>
+										<span class="filter-number">5</span>
+									</div>
+									<div class="filter-value">1000</div>
+								</div>
+								<div id="filter-selector-item-5" class="dsp-filter hold-menu" data-hold="filter-copy-paste" onclick="selectFilter(9);">
+									<div class="filter-title">
+										<span class="filter-text">EQ</span>
+										<span class="filter-number">6</span>
+									</div>
+									<div class="filter-value">1000</div>
+								</div>
+								<div id="filter-selector-item-6" class="dsp-filter hold-menu" data-hold="filter-copy-paste" onclick="selectFilter(10);">
+									<div class="filter-title">
+										<span class="filter-text">EQ</span>
+										<span class="filter-number">7</span>
+									</div>
+									<div class="filter-value">1000</div>
+								</div>
+								<div id="filter-selector-item-7" class="dsp-filter hold-menu" data-hold="filter-copy-paste" onclick="selectFilter(11);">
+									<div class="filter-title">
+										<span class="filter-text">EQ</span>
+										<span class="filter-number">8</span>
+									</div>
+									<div class="filter-value">1000</div>
+								</div>
+								<div id="filter-selector-item-8" class="dsp-filter hold-menu" data-hold="filter-copy-paste" onclick="selectFilter(12);">
+									<div class="filter-title">
+										<span class="filter-text">EQ</span>
+										<span class="filter-number">9</span>
+									</div>
+									<div class="filter-value">1000</div>
+								</div>
+								<div id="filter-selector-item-9" class="dsp-filter hold-menu" data-hold="filter-copy-paste" onclick="selectFilter(13);">
+									<div class="filter-title">
+										<span class="filter-text">EQ</span>
+										<span class="filter-number">10</span>
+									</div>
+									<div class="filter-value">1000</div>
+								</div>
+							</div>
+							</div>
+							</div>
+						</div>
+						<div class="menu-group" id="filter-slider-container">
+							<h2>Center Frequency</h2>
+							<div class="slider-container">
+								<div class="filter-slider" id="filter-slider-hz"></div>
+							</div>
+							<h2>Boost</h2>
+							<div class="slider-container">
+								<div class="filter-slider" id="filter-slider-boost"></div>
+							</div>
+							<h2>Sharpness</h2>
+							<div class="slider-container">
+								<div class="filter-slider" id="filter-slider-q"></div>
+							</div>
+						</div>
+						
+						
+						<div class="menu-group control-squares">
+								
+								<div class="control-square horizontal" id="filter-fc-control-square" onclick="startFilterFineAdjustment('Fc');">
+									<h2>Frequency</h2>
+									<div class="value">10000</div>
+									<div>Hz</div>
+								</div>
+								
+								<div class="control-square vertical" id="filter-boost-control-square" onclick="startFilterFineAdjustment('boost');">
+									<h2>Gain</h2>
+									<div class="value">1.5</div>
+									<div>dB</div>
+								</div>
+								
+								<div class="control-square horizontal" id="filter-q-control-square" onclick="startFilterFineAdjustment('Q');">
+									<h2>Sharpness</h2>
+									<div>Q <div class="value">0.7</div></div>
+									<div>&nbsp;</div>
+								</div>
+						</div>
+						
+						<div class="menu-group">
+							<h2>Tools</h2>
+							
+							<!--<div class="menu-item icon left" onclick="ask('copy-filters-ask-menu');">
+								<img class="menu-icon left" src="symbols-black/copy.svg">
+								<div class="menu-label">Copy Filters...</div>
+							</div>
+							
+							<div class="menu-item icon left disabled" id="paste-filters-menu-item" onclick="pasteFilters();">
+								<img class="menu-icon left" src="symbols-black/paste.svg">
+								<div class="menu-label">Paste Filters</div>
+							</div>-->
+							
+							<div class="menu-item icon left">
+								<img class="menu-icon left" src="symbols-black/tuning-fork.svg">
+								<div class="menu-label">Test Tone</div>
+							</div>
+							
+							<div class="menu-item icon left">
+								<img class="menu-icon left" src="symbols-black/flatten.svg">
+								<div class="menu-label">Flatten Filters...</div>
+							</div>
+							
+							
+						</div>
+						
+					</div>
+					
+					
+					</div>
+					
+				</div>
+			</div>
+			
+			
+			
+		</div>
+		
+		
+		<div class="tab-content" id="tab-wifi">
+		
+			<header>
+				<!--<img src="symbols/back.svg" class="symbol-button left">-->
+				<!--<div class="header-text-button right" id="tab-edit-button">Edit Tabs</div>-->
+				<h1>Wi-Fi</h1>
+				<!--<img src="symbols/add.svg" class="symbol-button right" onclick="">-->
+			</header>
+		
+			<div class="scroll-area">
+			
+				
+				<!--<div class="menu-button blue round"><img src="symbols/add.svg"></div>-->
+				
+				<div class="menu-group wifi-connected-wrap">
+					<h2>Connected</h2>
+					
+					<!--<div class="menu-item icon left wifi-connected-item">
+						<img class="menu-icon left" src="symbols-black/wifi-3.svg">
+						<div class="menu-label">BeoAccess</div>
+					
+					</div>-->
+				</div>
+				
+				<div class="menu-group wifi-saved-wrap">
+					<h2>Saved Networks</h2>
+					
+					<div class="wifi-saved-list">
+						<!-- Saved networks here -->
+						<!--<div class="menu-item icon left">
+							<img class="menu-icon left" src="symbols-black/wifi-saved.svg">
+							<div class="menu-label">Apple Network</div>
+						
+						</div>-->
+					</div>
+				</div>
+				
+				<div class="menu-group">
+					<h2>Available Networks</h2>
+					
+					<div class="wifi-available-list">
+						<!-- Saved networks here -->
+						<!--<div class="menu-item icon left">
+							<img class="menu-icon left" src="symbols-black/wifi-3.svg">
+							<div class="menu-label">Hämäläinen</div>
+						
+						</div>-->
+					</div>
+				</div>
+				
+				<div class="menu-group">
+					<p>If you don't see your network, try moving the system closer to the base station.</p>
+					
+					<div class="menu-item icon left">
+						<img class="menu-icon left" src="symbols-black/add.svg">
+						<div class="menu-label">Add Other Network...</div>
+					
+					</div>
+				</div>
+			</div>
+		
+		</div>
+		
+		
+		<div class="tab-content" id="tab-select-product">
+		
+			<header>
+				<!--<img src="symbols/back.svg" class="symbol-button left">-->
+				<!--<div class="header-text-button right" id="tab-edit-button">Edit Tabs</div>-->
+				<h1>Select System</h1>
+				<img src="symbols/delete.svg" class="symbol-button right" onclick="" id="edit-button">
+			</header>
+		
+			<div class="scroll-area">
+			
+				
+				<!--<div class="menu-button blue round"><img src="symbols/add.svg"></div>-->
+				
+				<div class="menu-group">
+					<h2>Saved Sound Systems</h2>
+					
+					<div id="product-list-o">
+					
+						<!-- PRODUCT LIST HERE -->
+					
+					</div>
+					
+					<!--<p>The app will automatically reconnect to the previously connected system or the next one that is found. To connect to another system select it from the list.</p>-->
+				</div>
+				
+				<div class="menu-group">
+				
+				<div class="menu-item icon left">
+						<img class="menu-icon left" src="symbols-black/add.svg">
+						<div class="menu-label">Add System...</div>
+					
+					</div>
+				</div>
+				<div class="menu-group">
+				
+				<div class="pill-button menu-button black">Set Up New...</div>
+				
+				</div>
+			</div>
+		
+		</div>
+		
+		<div class="tab-content" id="tab-system-tools">
+			<header>
+				<!--<img src="symbols/back.svg" class="symbol-button left">-->
+				<!--<div class="header-text-button right" id="tab-edit-button">Edit Tabs</div>-->
+				<h1>System Tools</h1>
+			</header>
+		
+			<div class="scroll-area">
+			
+				
+				<div class="menu-group">
+					<h2>General</h2>
+					
+					<div class="menu-item icon left">
+						<img class="menu-icon left" src="symbols-black/name.svg">
+						<div class="menu-label">System Name</div>
+						<div class="menu-value">BeoCreate Core</div>
+					</div>
+					
+					<div class="menu-item icon left" onclick="ask('shutdown-ask-menu');">
+						<img class="menu-icon left" src="symbols-black/shutdown.svg">
+						<div class="menu-label">Shut Down or Restart...</div>
+					</div>
+					
+				</div>
+				
+				<div class="menu-group">
+					<h2>Updates</h2>
+					
+					<div class="menu-item icon left">
+						<img class="menu-icon left" src="symbols-black/software-update.svg">
+						<div class="menu-label">Software Update</div>
+					</div>
+					
+				</div>
+				
+				
+			</div>
+		
+		</div>
+		
+		<div class="tab-content" id="tab-led">
+			<header>
+				<!--<img src="symbols/back.svg" class="symbol-button left">-->
+				<!--<div class="header-text-button right" id="tab-edit-button">Edit Tabs</div>-->
+				<h1>LED Control</h1>
+			</header>
+		
+			<div class="scroll-area">
+				
+				<div class="menu-group">
+					<div class="menu-item" onclick="testLED(0,0,0, 'normal');">
+						<div class="menu-label">Off</div>
+					</div>
+					
+				</div>
+				
+				<div class="menu-group">
+					<h2>Colours</h2>
+					
+					<div class="menu-item" onclick="testLED(255,0,0);">
+						<div class="menu-label">Red</div>
+					</div>
+					
+					<div class="menu-item" onclick="testLED(255,50,0);">
+						<div class="menu-label">Orange</div>
+					</div>
+					
+					<div class="menu-item" onclick="testLED(255,200,0);">
+						<div class="menu-label">Yellow</div>
+					</div>
+					
+					<div class="menu-item" onclick="testLED(0,255,0);">
+						<div class="menu-label">Green</div>
+					</div>
+					
+					<div class="menu-item" onclick="testLED(0,255,160);">
+						<div class="menu-label">Turquoise</div>
+					</div>
+					
+					<div class="menu-item" onclick="testLED(0,50,255);">
+						<div class="menu-label">Blue</div>
+					</div>
+					
+					<div class="menu-item" onclick="testLED(200,0,255);">
+						<div class="menu-label">Purple</div>
+					</div>
+					
+					<div class="menu-item" onclick="testLED(255,255,220);">
+						<div class="menu-label">White</div>
+					</div>
+					
+				</div>
+				
+				
+			</div>
+		
+		</div>
+		
+		<div class="tab-content" id="tab-remotes">
+			<header>
+				<!--<img src="symbols/back.svg" class="symbol-button left">-->
+				<!--<div class="header-text-button right" id="tab-edit-button">Edit Tabs</div>-->
+				<h1>Remote Control</h1>
+			</header>
+		
+			<div class="scroll-area">
+				
+				<div class="menu-group">
+					<div id="ez2-wrap">
+						<div id="ez2-pair-click"></div>
+						<img id="ez2-large" src="ez2.jpg">
+					</div>
+					
+					
+				</div>
+				
+				<div class="menu-group">
+					<h2>BeoSound Essence Remote</h2>
+					
+					<div class="ez2-unpaired">
+						<p>Pair a Bang &amp; Olufsen remote control with the sound system.</p>
+						
+					</div>
+					
+					<div class="ez2-paired">
+						<div class="menu-item static ez2-connected">
+							<div class="battery-wrap">
+								<div class="battery-level">87 %</div>
+								<div class="battery">
+									<div class="battery-fill"></div>
+								</div>
+							</div>
+							<div class="menu-value">Battery Level</div>
+						</div>
+						
+						<div class="menu-item static">
+							<div class="menu-label">EZ2A12345678Z</div>
+							<div class="menu-value">Serial Number</div>
+						</div>
+					</div>
+					
+				</div>
+				
+				<div class="menu-group">
+					<div id="remote-pair-button ez2-unpaired" class="pill-button black menu-button">Connect Remote...</div>
+					<div id="remote-unpair-button ez2-paired" class="pill-button red menu-button hidden">Forget This Remote</div>
+				</div>
+				
+				
+			</div>
+		
+		</div>
+		
+		<div class="tab-content" id="tab-about">
+			<header>
+				<!--<img src="symbols/back.svg" class="symbol-button left">-->
+				<!--<div class="header-text-button right" id="tab-edit-button">Edit Tabs</div>-->
+				<h1>About</h1>
+			</header>
+		
+			<div class="scroll-area">
+			
+				<img id="about-product-image" src="products/bc-core-mk1.jpg">
+			
+				<div id="about-beo">
+					<div class="beo-product-model" id="about-beo-product-model">BeoCreate Core</div>
+					<img src="bangolufsen.svg" id="about-beo-logo">
+				</div>
+				
+				<div id="about-generic" class="hidden">
+				
+				</div>
+				<!--
+				<div class="menu-group">
+					<h2>Sound System</h2>
+					<div class="menu-item static">
+						<div class="menu-label">Release 1</div>
+						<div class="menu-value">Software Version</div>
+					</div>
+				</div>
+				
+				<div class="menu-group">
+					<h2>Application</h2>
+					<div class="menu-item static">
+						<div class="menu-label">Release 1</div>
+						<div class="menu-value">Application Version</div>
+					</div>
+				</div>-->
+				
+				<div class="menu-group">
+				<h2>Software Versions</h2>
+				</div>
+				
+				<div class="menu-group control-squares">
+					<div class="control-square static" id="server-version-control-square">
+						<h2>Sound System</h2>
+						<div class="value">1</div>
+						<div class="hidden">Release</div>
+					</div>
+					
+					<div class="control-square static" id="app-version-control-square">
+						<h2>Application</h2>
+						<div class="value">1</div>
+						<div class="hidden">Release</div>
+					</div>
+				</div>
+				
+				
+				<div class="menu-group">
+					<div class="like-no-one-else">Like No One Else</div>
+				</div>
+				
+				
+			</div>
+		
+		</div>
+		
+		<div class="tab-content full-height" id="tab-create-welcome">
+			
+		
+			<div class="scroll-area">
+				
+				<img id="setup-beo" src="bangolufsen-w.svg">
+				
+				<h1>Welcome to Your New Sound System</h1>
+				
+				<p>You will be guided through a few steps to configure essential settings. These are:</p>
+				<ul>
+					<li><img src="symbols/wifi-3.svg">Adding Wi-Fi networks</li>
+					<li><img src="symbols/volume.svg">Basic loudspeaker setup</li>
+					<li><img src="symbols/input.svg">Setting up sources</li>
+				</ul>
+				<p>More in-depth settings will become available once the guided setup is complete.</p>
+				<p>Tap Next to begin.</p>
+				
+				
+			</div>
+		
+		</div>
+		
+		
+		<div class="tab-content" id="tab-more">
+			<header>
+				<!--<img src="symbols/back.svg" class="symbol-button left">-->
+				<!--<div class="header-text-button right" id="tab-edit-button">Edit Tabs</div>-->
+				<h1>Menu</h1>
+			</header>
+		
+			<div class="scroll-area">
+			
+				
+				<div class="menu-group">
+					<h2>Essentials</h2>
+					
+					<div class="menu-item icon left tab-bar-capable" onclick="selectTab('select-product');" id="more-menu-item-select-product" data-address="select-product">
+						<img class="menu-icon left" src="symbols-black/connect.svg">
+						<div class="menu-label">Select Sound System</div>
+					</div>
+					
+					<div class="menu-item icon left tab-bar-capable" onclick="selectTab('wifi');" id="more-menu-item-wifi" data-address="wifi">
+						<img class="menu-icon left" src="symbols-black/wifi-saved.svg">
+						<div class="menu-label">Wi-Fi</div>
+					</div>
+					
+					<div class="menu-item icon left tab-bar-capable" onclick="selectTab('sound');" id="more-menu-item-sound" data-address="sound">
+						<img class="menu-icon left" src="symbols-black/volume.svg">
+						<div class="menu-label">Sound</div>
+					</div>
+					
+					<div class="menu-item icon left tab-bar-capable" data-address="sources">
+						<img class="menu-icon left" src="symbols-black/input.svg" id="more-menu-item-sources">
+						<div class="menu-label">Sources</div>
+					</div>
+					
+				</div>
+				<div class="menu-group">
+					<h2>Playback Controls</h2>
+					
+					<div class="menu-item icon left tab-bar-capable" onclick="selectTab('now-playing');" id="more-menu-item-now-playing" data-address="now-playing">
+						<img class="menu-icon left" src="symbols-black/controller.svg">
+						<div class="menu-label">Now Playing</div>
+					</div>
+					
+					<div class="menu-item icon left tab-bar-capable" id="more-menu-item-remotes" onclick="selectTab('remotes');" data-address="remotes">
+						<img class="menu-icon left" src="symbols-black/essence.svg">
+						<div class="menu-label">Remote Control</div>
+					</div>
+					
+					<div class="menu-item icon left tab-bar-capable" id="more-menu-item-standby" data-address="standby">
+						<img class="menu-icon left" src="symbols-black/standby.svg">
+						<div class="menu-label">Standby</div>
+					</div>
+				</div>
+				<div class="menu-group">
+					<h2>More</h2>
+					
+					<div class="menu-item icon left tab-bar-capable" id="more-menu-item-link" data-address="link">
+						<img class="menu-icon left" src="symbols-black/link.svg">
+						<div class="menu-label">BeoLink</div>
+					</div>
+					
+					
+					<div class="menu-item icon left tab-bar-capable" onclick="selectTab('system-tools');" id="more-menu-item-system-tools" data-address="system-tools">
+						<img class="menu-icon left" src="symbols-black/settings.svg">
+						<div class="menu-label">System Tools</div>
+					</div>
+					
+					<div class="menu-item icon left tab-bar-capable" onclick="selectTab('led');" id="more-menu-item-advanced" data-address="led">
+						<img class="menu-icon left" src="symbols-black/light.svg">
+						<div class="menu-label">LED Control</div>
+					</div>
+					
+					<div class="menu-item icon left tab-bar-capable" onclick="selectTab('about');" id="more-menu-item-about" data-address="about">
+						<img class="menu-icon left" src="symbols-black/beo.svg">
+						<div class="menu-label">About</div>
+					</div>
+				</div>
+				
+				<section>
+					<h2>Customise the Tab Bar</h2>
+					<p>Drag icons from this menu to the tab bar to customise it. Reorder the tab bar by dragging.</p>
+				</section>
+			</div>
+		
+		</div>
+	</div>
+	
+</div>
+
+<div id="fine-adjust" class="general-hud">
+	<div id="fine-adjust-container">
+		<h2><span></span></h2>
+		<div id="fine-adjust-controller">
+			<div class="fine-adjust-buttons substract segmented vertical">
+				<div class="substract-0" onclick="fineAdjustChange(false, 0);">–0.01</div>
+				<div class="substract-1" onclick="fineAdjustChange(false, 1);">–0.1</div>
+				<div class="substract-2" onclick="fineAdjustChange(false, 2);">–1</div>
+			</div>
+			<div id="fine-adjust-value"><span>0.7</span><div>Q</div></div>
+			<div class="fine-adjust-buttons add segmented vertical">
+				<div class="add-0" onclick="fineAdjustChange(true, 0);">+0.01</div>
+				<div class="add-1" onclick="fineAdjustChange(true, 1);">+0.1</div>
+				<div class="add-2" onclick="fineAdjustChange(true, 2);">+1</div>
+			</div>
+		</div>
+		<div class="pill-button menu-button black" onclick="fineAdjust();">Done</div>
+	</div>
+</div>
+
+<div id="ask" class="general-hud">
+	<div id="ask-menu" class="general-hud-wrap">
+		<div id="ask-menu-wrap">
+			<div id="ask-menu-content">
+				
+			</div>
+		
+	
+			<div class="pill-button menu-button black" id="ask-cancel" onclick="ask();">Cancel</div>
+		</div>
+	</div>
+	
+	<div id="ask-menu-store">
+	
+		<!-- STORE ASK MENUS HERE -->
+		
+		<div id="shutdown-ask-menu">
+			<h2>Raspberry Pi Power</h2>
+			<div class="menu-item icon left" onclick="powerManage(0);">
+				<img src="symbols-black/shutdown.svg" class="menu-icon left">
+				<div class="menu-label">Shut Down</div>
+				<!--<p>Copies only the currently selected filter. When pasting the filter, only the selected filter will be changed.</p>-->
+			</div>
+			
+			<div class="menu-item icon left" onclick="powerManage(1);">
+				<img src="symbols-black/restart.svg" class="menu-icon left">
+				<div class="menu-label">Restart</div>
+				<!--<p>Copies all filters of the selected channel. When pasting the filters, all filters on the channel will be changed.</p>-->
+			</div>
+		</div>
+		
+		<div id="copy-filters-ask-menu">
+			<h2>Copy Filters</h2>
+			<div class="menu-item" onclick="copyFilters(1);">
+				<div class="menu-label">Selected Filter</div>
+				<!--<p>Copies only the currently selected filter. When pasting the filter, only the selected filter will be changed.</p>-->
+			</div>
+			
+			<div class="menu-item" onclick="copyFilters(0);">
+				<div class="menu-label">All Filters on Channel</div>
+				<!--<p>Copies all filters of the selected channel. When pasting the filters, all filters on the channel will be changed.</p>-->
+			</div>
+		</div>
+		
+		<div id="role-ask-menu">
+			<h2>Loudspeaker Role</h2>
+			<div class="menu-item" onclick="askOption(0);">
+				<div class="menu-label" >Left</div>
+			</div>
+			
+			<div class="menu-item" onclick="askOption(1);">
+				<div class="menu-label">Right</div>
+			</div>
+			
+			<div class="menu-item" onclick="askOption(2);">
+				<div class="menu-label">Mono</div>
+			</div>
+		</div>
+		
+		<div id="digital-out-ask-menu">
+			<div class="menu-item">
+				<div class="menu-label">Straight</div>
+				<p>Output unprocessed stereo signal from the current source. Use this option when daisy-chaining multiple systems together via the digital outputs and inputs.</p>
+			</div>
+			
+			<div class="menu-item">
+				<div class="menu-label">Processed</div>
+				<p>Output a signal with all current sound adjustments applied.</p>
+			</div>
+		</div>
+		
+		<div id="cancel-guide-ask-menu">
+			
+			<div class="menu-item">
+				<div class="menu-label">End Guided Setup</div>
+				<p>If you want to access Guided Setup again, you can find it in the Select Sound System screen.</p>
+			</div>
+		</div>
+		
+		<div id="open-network-ask-menu">
+			<div class="menu-group">
+				<h2>Add <span class="ask-dynamic-0">Open Network</span>?</h2>
+			<p>Open networks can be insecure. If you control this network, consider protecting it with a password.</p>
+			</div>
+			<div class="menu-item icon left" onclick="askOption(0);">
+				<img src="symbols-black/add.svg" class="menu-icon left">
+				<div class="menu-label">Add Anyway</div>
+			</div>
+		</div>
+		
+		<div id="remove-network-ask-menu">
+			<div class="menu-group">
+				<h2>Remove <span class="ask-dynamic-0">Network</span>?</h2>
+			<p>If you remove this network, the sound system won't connect to it.</p>
+			</div>
+			<div class="menu-item icon left" onclick="askOption(0);">
+				<img src="symbols-black/delete.svg" class="menu-icon left">
+				<div class="menu-label">Remove Network</div>
+			</div>
+		</div>
+		
+		<div id="remove-current-network-ask-menu">
+			<div class="menu-group">
+				<h2>Remove <span class="ask-dynamic-0">Current Network</span>?</h2>
+				<p>The sound system is currently connected to this network. If you remove it, you may have to connect your <span class="device">device</span> to the 'BeoSetup' hotspot to add another available network.</p>
+			</div>
+			<div class="menu-item icon left" onclick="askOption(0);">
+				<img src="symbols-black/delete.svg" class="menu-icon left">
+				<div class="menu-label">Remove Anyway</div>
+			</div>
+		</div>
+		
+		<div id="preset-modified-ask-menu">
+			<div class="menu-group">
+				<h2><span class="ask-dynamic-0">Previous Preset</span> Has Been Changed</h2>
+				<p>Save current sound adjustments before applying the new adjustments?</p>
+			</div>
+			
+			<div class="menu-item icon left" onclick="askOption(0);">
+				<img src="symbols-black/delete.svg" class="menu-icon left">
+				<div class="menu-label">Update Previous Preset</div>
+			</div>
+			
+			<div class="menu-item icon left" onclick="askOption(1);">
+				<img src="symbols-black/add.svg" class="menu-icon left">
+				<div class="menu-label">Save a New Preset</div>
+			</div>
+			
+			<div class="menu-item icon left" onclick="askOption(2);">
+				<img src="symbols-black/delete.svg" class="menu-icon left">
+				<div class="menu-label">Ignore Changes</div>
+			</div>
+			
+		</div>
+		
+		<div id="speaker-type-ask-menu">
+			<div class="menu-group">
+				<h2>Type of Channel <span class="ask-dynamic-0">A</span></h2>
+			</div>
+			
+			<div class="menu-group no-padding menu-selector-group">
+			<div class="menu-selector-scroller">
+				<div class="menu-selector-wrap">
+				
+				<div class="menu-selector" id="speaker-type-selector">
+				
+					<div>
+						<img src="drivers/tweet.png">
+						<div class="selector-value">Tweeter</div>
+					</div>
+					
+					<div>
+						<img src="drivers/mid-full.png">
+						<div class="selector-value">Mid-tweeter</div>
+					</div>
+					
+					<div>
+						<img src="drivers/mid-full.png">
+						<div class="selector-value">Midrange</div>
+					</div>
+					
+					<div>
+						<img src="drivers/woof.png">
+						<div class="selector-value">Mid-woofer</div>
+					</div>
+					
+					<div>
+						<img src="drivers/woof.png">
+						<div class="selector-value">Woofer</div>
+					</div>
+					
+					<div>
+						<img src="drivers/mid-full.png">
+						<div class="selector-value">Full-range</div>
+					</div>
+				
+				</div>
+				
+				</div>
+			
+			</div>
+			</div>
+			
+			<div class="menu-group">
+				<div class="pill-button outline" onclick="help('4ca-legend');">Connection Guide</div>
+			</div>
+			
+		</div>
+	</div>
+</div>
+
+<div id="help">
+	<header>
+		<img src="symbols/delete-x.svg" onclick="help();" class="symbol-button left">
+		<h1>Help</h1>
+	</header>
+	<div class="scroll-area">
+		<div class="help-topic" id="help-presets">
+			<h1>Sound Preset</h1>
+			<h2>Overview</h2>
+			<p>With sound presets, you can quickly save and reapply sound adjustments.</p>
+			<h2>Saving a Preset</h2>
+			<p>To save the current sound adjustments as a new preset, select <strong>Save New Preset</strong>. Type a name for the preset and press the checkmark. Your preset is now saved.</p>
+			
+			<h2>Applying a Preset</h2>
+			<p>To apply a preset, select it from the list and then choose <strong>Apply All Adjustments.</strong></p>
+			<p>You can also uncheck adjustments that you don't want to apply.</p>
+			<p>If changes have been made since saving or applying the last preset, you can save the changes to that preset or create a new one.</p>
+			<h2>Preset Contents</h2>
+			<p>A sound preset contains the following adjustments:</p>
+			<ul>
+				<li>Loudspeaker roles, mute states and levels</li>
+				<li>Loudspeaker dimensions (BeoCreate Elements only)</li>
+				<li>Crossover settings (loudspeaker type)</li>
+				<li>Equaliser filters</li>
+				<li>ToneTouch settings</li>
+			</ul>
+			
+		</div>
+		
+		<div class="help-topic" id="help-4ca-legend">
+		
+			<div class="amplifier-illustration">
+				<img src="4ca-illustration.svg">
+			</div>
+			<h2>Amplifier Channels</h2>
+			<p>BeoCreate 4-Channel Amplifier has four channels. In the application, the channels are marked with colours and letters A–D, shown above.</p>
+			
+			<h2>Connection Tips</h2>
+			<p>For the best performance:</p>
+			<ul>
+				<li>Connect large drivers, such as woofers, to channels A and B</li>
+				<li>Connect small drivers, such as tweeters, to channels C and D</li>
+			</ul>
+			<p>Remember to use the correct polarity (plus and minus).</p>
+			
+		</div>
+		
+		<div class="help-topic" id="help-speaker-type">
+			<h1>Loudspeaker Type</h1>
+			<h2>Overview</h2>
+			<p>Selecting the correct loudspeaker types will improve the sound and protect the drivers.</p>
+			
+			<h2>Selecting a Loudspeaker Type</h2>
+			<p>To choose a loudspeaker type, tap the picture of the loudspeaker driver. From the panel, select the closest match to what is connected to the amplifier. A crossover is then automatically set up.</p>
+			<p>A crossover splits the sound spectrum to bands, sending each of them to the appropriate loudspeaker driver. This protects the drivers from signals they are not designed to play.</p>
+			<div class="pill-button" onclick="help('4ca-legend');">Connection Guide</div>
+			
+			<h2>Advanced Crossover</h2>
+			<p>The automatic crossover is a general approximation. To customise the crossover for your loudspeaker, use the sliders in Crossover &amp; Filters screen.</p>
+			
+			<h2>Muting a Channel</h2>
+			<p>To mute or unmute a channel, tap the loudspeaker icon at the far right. This control is also available on the Level tab.</p>
+		</div>
+		
+		<div class="help-topic" id="help-speaker-role">
+			<h1>Loudspeaker Role</h1>
+			<h2>Overview</h2>
+			<p>Select how a stereo signal is distributed to the loudspeakers.</p>
+			<h2>Selecting a Role</h2>
+			<p>Tap on an option to assign a role to the loudspeaker channel:</p>
+			<ul>
+				<li><strong>Left</strong> plays the left channel of a stereo signal.</li>
+				<li><strong>Right</strong> plays the right channel of the signal.</li>
+				<li><strong>Mono</strong> downmixes the left and right channels of the signal together.</li>
+			</ul>
+			
+		</div>
+		
+		<div class="help-topic" id="help-speaker-level">
+			<h1>Loudspeaker Level</h1>
+			<h2>Overview</h2>
+			<p>Adjust the relative levels of the loudspeaker channels.</p>
+			<h2>Adjusting Levels</h2>
+			<p>Drag the sliders from right to left to lower the volume of a channel.</p>
+			<p>For maximum sound quality, only lower the volume of channels that are too loud. Always use the volume control of the source to adjust overall volume of the system.</p>
+			
+			<h2>Muting a Channel</h2>
+			<p>To mute or unmute a channel, tap the loudspeaker icon to the right of the slider. This control is also available on the Type tab.</p>
+			
+		</div>
+		
+		<div class="help-topic" id="help-speaker-more-options">
+			<h1>More Options</h1>
+			
+			<h2>Ambience</h2>
+			<p>Determines whether the channel receives ToneTouch ambience effect. Depending on the loudspeaker configuration, you may want to turn it off for certain channels.</p>
+			<p>Adjust the ambience level in ToneTouch screen by scaling the dot with two fingers.</p>
+			
+		</div>
+		
+		<div class="help-topic" id="help-tone-touch">
+			<h1>ToneTouch</h1>
+			<h2>Overview</h2>
+			<p>ToneTouch is a quick and intuitive way to customise the tonality of the sound system.</p>
+			<h2>Bass and Treble</h2>
+			<p>Moving the dot adjusts bass and treble.</p>
+			<ul>
+				<li>Drag the dot right to boost treble, left to reduce it.</li>
+				<li>Drag the dot up to boost bass, down to reduce it.</li>
+			</ul>
+			<p>When the dot is at the center, the adjustments are off.</p>
+			
+			<h2>Ambience</h2>
+			<p>If your system has a single loudspeaker, you may want to try increasing ambience of the sound.</p>
+			<p>Spread with two fingers to make the dot larger, pinch to make it smaller. The larger the dot, the more ambience is added to the sound.</p>
+			<p>When the dot is the smallest, only the original sound is heard, without added ambience.</p>
+			<p>By default, the ambience effect applies to all loudspeaker channels. It can be disabled for selected channels on the More tab of the Loudspeaker Setup screen.</p>
+			
+			<h2>Technical Information</h2>
+			<p>ToneTouch does not add any artificially created effects to the sound, such as reverb or echo. All elements in the "ambience signal" are present in the original sound.</p>
+			<ul>
+				<li>Most of the signal is created by substracting the left channel from the right channel.</li>
+				<li>Below 300 Hz, the signal is a sum of the left and right channels to preserve bass.</li>
+			</ul>
+			<p>When ambience is increased, more of this signal is mixed together with the original sound.</p>
+			<p>Bass and treble adjustments are applied before the equalisation filters that can be adjusted in the Filters screen.</p>
+		</div>
+		
+		<div class="help-topic" id="help-arc">
+			<h1>Room Compensation</h1>
+			<h2>Overview</h2>
+			<p>Room Compensation adapts the loudspeakers to the listening space.</p>
+			<h2>Making Measurements</h2>
+			<p>Measurements tell the system how the listening space influences the sound.</p>
+			<p>First measurement is the reference – how the loudspeaker sounds like up close.</p>
+		</div>
+	
+		<div class="help-topic" id="help-graphs">
+			<h1>Graphs</h1>
+			<h2>Overview</h2>
+			<p>The graph is a visual representation of how the system processes sound. Note that it does not visualise the music that is played. The next sections will help you read and understand the graphs.</p>
+			<h2>Colours</h2>
+			<p>Colours match the four available loudspeaker channels. There are two sets of information shown at the same time on the grid:</p>
+			<ul>
+				<li>Bright curves show the <strong>magnitude response</strong> of the channels (also often called frequency response).</li>
+				<li>Dim curves indicate the <strong>phase response</strong> of the channels.</li>
+			</ul>
+			<p>When an individual channel is selected, the curves of other channels will be dimmed to make the selected channel stand out.</p>
+			<h2>Magnitude Response</h2>
+			<p>Indicates the frequency-dependent loudness of output signal relative to the input signal. Frequency ("pitch") of the signal is shown on the horizontal axis, from 10 to 20000 Hz.</p>
+			<ul>
+				<li>"Bass" is everything below about 250 Hz on the graph.</li>
+				<li>"Midrange" is between about 250 and 2000 Hz.</li>
+				<li>"Treble" is everything above about 2000 Hz.</li>
+			</ul>
+			<p>Intensity of the signal is shown on the vertical axis, from +15 to –15 dB. When the graph is above the centerline, the output signal is louder than the input signal. Conversely, the signal is quieter below the centerline, and unchanged at 0 dB.</p>
+			<h2>Phase Response</h2>
+			<p>Phase is a frequency-dependent time delay in the signal. It is affected by the filters that are active. Frequency of the signal is again shown on the horizontal axis. Phase shift is shown in degrees on the vertical axis, from -180° to +180°.</p>
+			<ul>
+				<li>At 0°, the output signal is in phase with the input signal.</li>
+				<li>At 180°, the output signal is inverted in relation to the input signal.</li>
+				<li>At 360°, the output signal is again in phase with the input signal, though delayed by one full cycle (a full back-and-forth movement of the loudspeaker driver).</li>
+			</ul>
+			<p>The graph will "roll over" to indicate phase shifts beyond 180°. In this case, the curve is cut at the edge of the grid and will continue from the opposite edge.</p>
+			<p>The phase response graph is helpful when using certain types of crossover filters. Tap the help button next to Crossover for more information.</p>
+		</div>
+		
+		<div class="help-topic" id="help-filters">
+			<h1>Filters</h1>
+			<h2>Overview</h2>
+			<p>Filters adapt the loudspeaker drivers to their enclosures by boosting or attenuating parts of the sound spectrum. They look like peaks and valleys on the graph.</p>
+			<p>Each channel has 10 equaliser filters available. Select a filter from the list to adjust its settings. The selected filter is shown as a filled section of the graph with a dot.</p>
+			<h2>Presets</h2>
+			<p>Filters are always customisable, but selecting a Sound Preset will apply predefined settings. Refer to help in the Sound Preset screen for more information.</p>
+			<h2>Adjust a Filter</h2>
+			<p>To quickly adjust the selected filter, drag anywhere on the graph.</p>
+			<ul>
+				<li>Drag left or right to adjust the <strong>center frequency</strong>.</li>
+				<li>Drag up or down to adjust <strong>intensity</strong>.</li>
+				<li>A Pinch or spread gesture makes the filter <strong>narrower or wider</strong>.</li>
+			</ul>
+			<p>To <strong>fine-tune</strong> the adjustments, tap the boxes with values below the filter list. Double-tap to "smart round" the values.</p>
+			<p>To turn a filter off or on, select it from the list and tap on it again. A diagonal line indicates the filter is off.</p>
+			<h2>Copy and Paste</h2>
+			<p>All filters are independent of each other. To use the same settings for other filters quickly, use copy and paste.</p>
+			<ul>
+				<li>Tap and hold on an <strong>individual filter</strong> in the filter list to copy and paste individual filters.</li>
+				<li>Tap and hold on the <strong>channel letter</strong> below the graph to copy and paste all filters of that channel. You can also paste just one filter this way – the settings will be applied to the currently selected filter on that channel.</li>
+			</ul>
+			<p>The last settings you copy will be preserved on the pasteboard, even if you copy other things (such as text or pictures) on your device.</p>
+			<h2>About Filters</h2>
+			<p>The available filters are 2nd-order single-precision infinite impulse response (IIR) filters.</p>
+		</div>
+		
+		<div class="help-topic" id="help-crossover">
+			<h1>Crossover</h1>
+			<h2>Overview</h2>
+			<p>Crossover divides the sound spectrum between loudspeaker drivers, so that each driver only plays the the frequencies they are designed for.</p>
+			<p>Colours of the sliders match the four available loudspeaker channels.</p>
+			<h2>Presets</h2>
+			<p>Crossover settings are always customisable, but the following features will apply predefined settings:</p>
+			<ul>
+				<li>Selecting a Sound Preset.</li>
+				<li>Selecting loudspeaker types in Speaker Type &amp; Role screen.</li>
+			</ul>
+			<p>Refer to help of these features for more information.</p>
+			
+			<h2>Adjust the Crossover</h2>
+			<p>Sliders quickly narrow down the frequency band.</p>
+			<ul>
+				<li>Drag the left handle to adjust the lower limit of the frequency band (high-pass filter).</li>
+				<li>Drag the right handle to adjust the upper limit of the frequency band (low-pass filter).</li>
+				<li>Drag the handle all the way to the end to turn off the filter completely. When there is no value above the handle, the filter is off.</li>
+				
+			</ul>
+			<p>The handle will briefly "snap" to the values of other sliders to ease aligning the filters.</p>
+			<p>Tap the high-pass and low-pass symbols to fine-tune the filters.</p>
+			<!--<h2>Filter Types</h2>
+			<p>There are two different types of high-pass and low-pass filters available.</p>
+			<ul>
+				<li>4th-order Linkwitz-Riley, with a slope of 24 db per octave (default).</li>
+				<li>2nd-order Butterworth, with a slope of 12 dB per octave (see Invert Phase section).</li>
+			</ul>
+			<p>Tap the Filter Type button next to the desired high-pass or low-pass filter to select the type.</p>
+			<h2>Invert Phase</h2>
+			<p>2nd-order crossover filters will shift the phase of the signal by 90° at the crossover frequency – positive for high-pass and negative for low-pass.</p>
+			<p>This means that the signals will be 180° out of phase and the loudspeakers will cancel each other out at the crossover frequency. To avoid this, the tweeter (in a 2-way system) or the midrange (in a 3-way system) should be inverted to correct for the phase difference.</p>
+			<p>The system will automatically do this when making adjustments. To manually invert the phase of a loudspeaker, tap the Invert Phase toggle.</p>
+			<p>The phase of a loudspeaker may also need to be inverted for other reasons, such as placement or incorrect wiring. As a general rule of thumb, the correct setting for the Invert Phase toggle is usually the one that makes the sound appear louder.</p>-->
+		</div>
+		
+		
+	</div>
+</div>
+
+<div id="connect-to" class="general-hud white visible">
+	<div id="connect-to-wrap" class="blur-content full auto-rise">
+		<div id="onboarding-screen">
+			<div class="spacer">
+				<img src="bangolufsen.svg">
+				<div>
+					<h1>Welcome to your new sound system</h1>
+				</div>
+			</div>
+			<div>
+				
+				
+			</div>
+			<div class="pill-button black" id="onboarding-add-button" onclick="inputProduct();">
+				Set Up Product...
+			</div>
+		</div>
+	
+		<div id="connecting-screen">
+			<div class="spacer">
+			</div>
+			<div>
+				<div id="connecting-products">
+					<div class="current">BeoSound Elements</div>
+					<div>BeoLab S</div>
+				</div>
+				
+				<h2>Connecting...</h2>
+			</div>
+			<div class="pill-button outline" id="connecting-select-button" onclick="showSoundSystemSelectionScreen('products');">
+				Select Sound System...
+			</div>
+		</div>
+		
+		<div id="select-product-screen">
+			<header class="white">
+				<img src="symbols-black/delete-x.svg" class="symbol-button left" id="close-select-product-screen" alt="Close" onclick="showSoundSystemSelectionScreen(false);">
+				<h1>Select System</h1>
+				<img src="symbols-black/delete.svg" alt="Toggle Delete Mode" class="symbol-button right" id="product-edit-toggle" onclick="toggleProductEditMode();">
+			</header>
+			<div class="scroll-area">
+			
+				
+				<!--<div class="menu-button blue round"><img src="symbols/add.svg"></div>-->
+				
+				<div class="menu-group">
+					<h2>Saved Sound Systems</h2>
+					
+					<div id="product-list">
+					
+						<!-- PRODUCT LIST HERE -->
+					
+					</div>
+					
+					<!--<p>The app will automatically reconnect to the previously connected system or the next one that is found. To connect to another system select it from the list.</p>-->
+				</div>
+				
+				<div class="menu-group">
+				
+				<div class="menu-item icon left" onclick="inputProduct();">
+						<img class="menu-icon left" src="symbols-black/add.svg">
+						<div class="menu-label">Add System...</div>
+					
+					</div>
+				</div>
+				<div class="menu-group">
+				<!--
+				<div class="pill-button menu-button black">Set Up New...</div>
+				-->
+				
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="sound-preset-details" class="general-hud white">
+	<div id="sound-preset-details-wrap" class="blur-content full auto-rise">
+		
+			<header class="white">
+				<img src="symbols-black/delete-x.svg" class="symbol-button left" id="close-select-product-screen" alt="Done" onclick="viewCustomSoundPreset();">
+				<h1>BeoShit 4</h1>
+				<img src="symbols-black/delete.svg" alt="Delete Sound Preset" class="symbol-button right" id="product-edit-toggle" onclick="deleteSoundPreset();">
+			</header>
+			<div class="scroll-area">
+			
+				
+				<!--<div class="menu-button blue round"><img src="symbols/add.svg"></div>-->
+				
+				
+				<div class="menu-group" id="preset-preflight">
+				
+					<h2>Preset Preview</h2>
+					
+					<div class="menu-item icon left checkbox checked" id="preset-preflight-role" onclick="soundPresetPreflightToggle('role');">
+						<div class="one-row">
+							<img class="menu-icon left checkmark" src="symbols-black/checkmark.svg">
+							<div class="menu-label">Loudspeaker Roles</div>
+						</div>
+						<div class="preset-preview side-by-side role-preview">
+							<div class="channel channel-0">
+								<div class="dsp-colour colour-dot red"></div>
+								<span></span>
+							</div>
+							<div class="channel channel-1">
+								<div class="dsp-colour colour-dot yellow"></div>
+								<span></span>
+							</div>
+							<div class="channel channel-2">
+								<div class="dsp-colour colour-dot green"></div>
+								<span></span>
+							</div>
+							<div class="channel channel-3">
+								<div class="dsp-colour colour-dot blue"></div>
+								<span></span>
+							</div>
+						</div>
+					</div>
+					
+					<div class="menu-item icon left checkbox checked" id="preset-preflight-crossover" onclick="soundPresetPreflightToggle('crossover');">
+						<div class="one-row">
+							<img class="menu-icon left checkmark" src="symbols-black/checkmark.svg">
+							<div class="menu-label">Crossover</div>
+						</div>
+						<div class="compact-crossover-preview preset-preview">
+							<div class="compact-crossover-channel" id="compact-crossover-0">
+								<div class="fill red">
+									<div class="driver-type"></div>
+									<div class="high-pass">35 Hz</div>
+									<div class="low-pass">250 Hz</div>
+								</div>
+							</div>
+							<div class="compact-crossover-channel" id="compact-crossover-1">
+								<div class="fill yellow">
+									<div class="driver-type"></div>
+									<div class="high-pass">35 Hz</div>
+									<div class="low-pass">250 Hz</div>
+								</div>
+							</div>
+							<div class="compact-crossover-channel" id="compact-crossover-2">
+								<div class="fill green">
+									<div class="driver-type"></div>
+									<div class="high-pass">35 Hz</div>
+									<div class="low-pass none">250 Hz</div>
+								</div>
+							</div>
+							<div class="compact-crossover-channel" id="compact-crossover-3">
+								<div class="fill blue">
+									<div class="driver-type"></div>
+									<div class="high-pass">35 Hz</div>
+									<div class="low-pass none">250 Hz</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="menu-item icon left checkbox checked" id="preset-preflight-filters" onclick="soundPresetPreflightToggle('filters');">
+						<img class="menu-icon left checkmark" src="symbols-black/checkmark.svg">
+						<div class="menu-label">Equaliser Filters</div>
+					</div>
+					
+					<div class="menu-item icon left checkbox checked" id="preset-preflight-tone-touch" onclick="soundPresetPreflightToggle('toneTouch');">
+						<img class="menu-icon left checkmark" src="symbols-black/checkmark.svg">
+						<div class="menu-label">ToneTouch</div>
+					</div>
+					
+				</div>
+				
+				
+				
+				<div class="pill-button menu-button black" id="apply-sound-preset-button" onclick="applySoundPreset();">Apply All Adjustments</div>
+				
+				</div>
+			</div>
+	</div>
+</div>
+
+<div id="text-input" class="general-hud white">
+	<div id="text-input-wrap" class="blur-content auto-rise full">
+			<header class="white">
+				<img class="symbol-button left" src="symbols-black/delete-x.svg" onclick="cancelText();">
+				<h1>Title</h1>
+				<img class="symbol-button right" id="text-input-submit" src="symbols-black/done.svg" onclick="submitText();">
+			</header>
+			<div class="scroll-area">
+				<div class="menu-group">
+				<p id="text-prompt">Text prompt.</p>
+				</div>
+				<div class="menu-group">
+				<form id="text-fields" action="javascript:submitText();">
+					<input type="text" name="text-input" value="" id="text-input-plain" autocorrect="off" autocapitalize="off" placeholder="hostname.local">
+					<input type="password" name="password-input" id="text-input-password" placeholder="Password" value="">
+					<input type="submit" value="Submit" id="submit-text">
+				</form>
+				</div>
+			</div>
+	</div>
+</div>
+
+<div id="swipe-delete-mask"></div>
+
+<div id="context-menu-overlay" onclick="contextMenu();">
+	<div id="context-menu">
+		<div class="context-menu-content filter-copy-10-paste-1">
+			<div onclick="copyFilters(0);">Copy 10 Filters</div>
+			<div onclick="pasteFilters();">Paste One Filter</div>
+		</div>
+		<div class="context-menu-content filter-copy-10-paste-10">
+			<div onclick="copyFilters(0);">Copy 10 Filters</div>
+			<div onclick="pasteFilters();">Paste 10 Filters</div>
+		</div>
+		<div class="context-menu-content filter-copy-1-paste-1">
+			<div onclick="copyFilters(1);">Copy This Filter</div>
+			<div onclick="pasteFilters();">Paste One Filter</div>
+		</div>
+		<div class="context-menu-content filter-copy-10">
+			<div onclick="copyFilters(0);">Copy 10 Filters</div>
+		</div>
+		<div class="context-menu-content filter-copy-1">
+			<div onclick="copyFilters(1);">Copy This Filter</div>
+		</div>
+	</div>
+</div>
+
+<div id="notify" class="general-hud">
+	<div id="notify-container" class="blur-content">
+		<img src="symbols/notification.svg">
+		<h1>Notification</h1>
+		<p>This is notification fine print.</p>
+	</div>
+</div>
+
+<script src='scripts/jsdsp.js'></script>
+<script src='scripts/elements-comms.js'></script>
+<script src='scripts/elements-dsp.js'></script>
+<script src='scripts/elements-wifi.js'></script>
+<script src='scripts/elements-system.js'></script>
+<script src='scripts/elements-player.js'></script>
+<script src='scripts/elements-app.js'></script>
+<script src='scripts/flotr2.min.js'></script>
+<script src='scripts/math.min.js'></script>
+<script src='scripts/diacritics.js'></script>
+
+</body>
+</html>
+		
