@@ -1,6 +1,8 @@
 # BeoCreate Elements
 BeoCreate Elements is an open-design sound system based on [BeoCreate 4-Channel Amplifier](http://www.hifiberry.com/beocreate/). This software package builds on [Project ReCreate](https://github.com/bang-olufsen/create).
 
+![BeoCreate Elements](https://raw.githubusercontent.com/tuomashamalainen/beocreate-elements/master/BeoAppStackRender.jpg)
+
 ## Features
 #### General
 - Beautiful web-based user interface
