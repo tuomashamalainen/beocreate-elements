@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>BeoCreate Elements</title>
+	
+	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+	
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+	<meta name="apple-mobile-web-app-title" content="Elements" />
+		
+	<link rel="stylesheet" type="text/css" href="elements-tv.css" />
+	<script type="text/javascript" src="scripts/jquery-1.10.2.min.js"></script>
+	<script type="text/javascript" src="scripts/jquery-ui.min.js"></script>
+	<script src='scripts/modernizr.js'></script>
+	<script src='scripts/fastclick.js'></script>
+	<!--[if lt IE 9]>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	
+	
+</head>
+<body>
+
+<!--<header>
+	<img class="logo" src="bangolufsen-w.svg">
+</header>-->
+	<div id="bg-artwork" class="artwork-bg"></div>
+	<div id="now-playing">
+		
+		<div class="artwork-area">
+			<img class="artwork-img" id="now-playing-artwork-img" src="samples/discplaceholder.jpg">
+		</div>
+		<div class="info-area">
+			<h1 class="track">BeoCreate Elements</h1>
+			<h2 class="artist">Bang &amp; Olufsen</h2>
+			<div id="time-bar">
+				<div id="time-bar-left" class="time-bar-time">0:00</div><div id="time-bar-right" class="time-bar-time">-0:00</div>
+					<div id="time-bar-container"><div id="time-bar-fill"></div></div>
+				</div>
+			<div id="responsetest"></div>
+		</div>
+		
+	</div>
+	
+	<div id="menu-system">
+		<div id="menu-system-wrapper">
+		<div class="menu-screen">
+		<header>
+			<h1>Sound</h1>
+		</header>
+		<div class="scroll-area">
+			<div class="menu-group">
+						
+						<!--<div class="menu-button blue">
+							Start Server
+						</div>-->
+						
+						<h2>Quick Settings</h2>
+						
+						<div class="menu-item icon left chevron tab-bar-capable highlighted" onclick="menuTransition('sound-main','sound-preset-menu',1);" data-address="sound/sound-preset-menu">
+							<img class="menu-icon left" src="symbols/preset.svg">
+							<div class="menu-label">Sound Preset</div>
+							<!--<p>A preset will automatically apply the right sound adjustments for Bang &amp; Olufsen loudspeaker designs.</p>-->
+						</div>
+						
+						<div class="menu-item icon left chevron tab-bar-capable" onclick="menuTransition('sound-main','speaker-dimensions-menu',1);" data-address="sound/speaker-dimensions-menu">
+							<img class="menu-icon left" src="symbols/magic.svg">
+							<div class="menu-label">Loudspeaker Dimensions</div>
+							<!--<p>Specify the dimensions of the loudspeaker enclosure to fine-tune the sound preset.</p>-->
+						</div>
+					
+					</div>
+					<div class="menu-group">
+					
+						<h2>Adjustments</h2>
+						
+						<div class="menu-item icon left guide-hide chevron tab-bar-capable" onclick="menuTransition('sound-main','speaker-role-menu',1);" data-address="sound/speaker-role-menu">
+							<img class="menu-icon left" src="symbols/role.svg">
+							<div class="menu-label">Loudspeaker Setup</div>
+						</div>
+						
+						<div class="menu-item icon left guide-hide chevron tab-bar-capable" onclick="menuTransition('sound-main','tone-touch-menu',1);" data-address="sound/tone-touch-menu">
+							<img class="menu-icon left" src="symbols/tonetouch.svg">
+							<div class="menu-label">ToneTouch</div>
+							<!--<div class="menu-value">Off</div>-->
+						</div>
+						
+						
+						<div class="menu-item icon left guide-hide chevron tab-bar-capable" onclick="menuTransition('sound-main','arc-menu',1);" data-address="sound/arc-menu">
+							<img class="menu-icon left" src="symbols/room-eq.svg">
+							<div class="menu-label">Room Compensation</div>
+							<!--<div class="menu-value">Off</div>-->
+						</div>
+						
+					
+						
+					</div>
+					<div class="menu-group guide-hide">
+					
+						<h2>Advanced</h2>
+						
+						<div class="menu-item icon left chevron tab-bar-capable" data-address="sound/filter-menu" onclick="menuTransition('sound-main','filter-menu',1);">
+							<img class="menu-icon left" src="symbols/eq.svg">
+							<div class="menu-label">Crossover &amp; Filters</div>
+						</div>
+						
+						<div class="menu-item icon left chevron tab-bar-capable" data-address="sound/custom-dsp-menu" onclick="console.log('c');" onmousedown="console.log('d');" onmouseup="console.log('u');">
+							<img class="menu-icon left" src="symbols/dsp.svg">
+							<div class="menu-label">Custom DSP Program</div>
+						</div>
+					</div>
+		</div>
+		</div>
+		</div>
+	</div>
+	
+	
+	<footer>
+		<div id="footer-wrapper">
+		<div id="legend">
+			<div class="legend-item" id="legend-red">
+				<div class="colour-dot red"></div>
+				<span>Help</span>
+			</div>
+			<div class="legend-item" id="legend-blue">
+				<div class="colour-dot blue"></div>
+				<span>Help</span>
+			</div>
+			<div class="legend-item" id="legend-green">
+				<div class="colour-dot green"></div>
+				<span>Help</span>
+			</div>
+			<div class="legend-item" id="legend-yellow">
+				<div class="colour-dot yellow"></div>
+				<span>Help</span>
+			</div>
+			<div class="legend-item" id="legend-go" onclick="$('#now-playing').toggleClass('mini');">
+				<div class="colour-dot go"></div>
+				<span>Select</span>
+			</div>
+		</div>
+		</div>
+	</footer>
+
+	
+	<script src='scripts/elements-tv.js'></script>
+</body>
+</html>
+		

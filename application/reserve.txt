@@ -213,3 +213,40 @@ OLD TYPE & ROLE
 	opacity: 0.5;
 	margin-top: 0.3em;
 }
+
+
+
+
+
+
+
+.menu-toggle {
+	display: flex;
+	align-items: center;
+	height: 30px;
+	margin-top: -4px;
+	margin-bottom: -4px;
+	width: 42px;
+	justify-content: space-between;
+}
+
+.menu-toggle div, .on .menu-toggle div:first-of-type {
+	width: 10px;
+	height: 10px;
+	display: flex;
+	text-transform: uppercase;
+	background-color: black;
+	border-radius: 50%;
+	color: white;
+	align-items: center;
+	justify-content: center;
+	transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease, font-size 0.3s ease;
+	font-size: 0.3em;
+	font-weight: 500;
+}
+
+.menu-toggle div:first-of-type, .on .menu-toggle div:last-of-type {
+	width: 30px;
+	height: 30px;
+	font-size: 0.8em;
+}

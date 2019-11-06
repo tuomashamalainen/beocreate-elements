@@ -132,6 +132,11 @@
 						
 						<h2>Quick Settings</h2>
 						
+						<div class="menu-item icon left chevron tab-bar-capable" onclick="menuTransition('sound-main','magic-sound-menu',1);" data-address="sound/magic-sound-menu">
+							<img class="menu-icon left" src="symbols-black/magic.svg">
+							<div class="menu-label">Automatic Setup</div>
+						</div>
+						
 						<div class="menu-item icon left chevron tab-bar-capable" onclick="menuTransition('sound-main','sound-preset-menu',1);" data-address="sound/sound-preset-menu">
 							<img class="menu-icon left" src="symbols-black/preset.svg">
 							<div class="menu-label">Sound Preset</div>
@@ -139,7 +144,7 @@
 						</div>
 						
 						<div class="menu-item icon left chevron tab-bar-capable" onclick="menuTransition('sound-main','speaker-dimensions-menu',1);" data-address="sound/speaker-dimensions-menu">
-							<img class="menu-icon left" src="symbols-black/magic.svg">
+							<img class="menu-icon left" src="symbols-black/dimensions.svg">
 							<div class="menu-label">Loudspeaker Dimensions</div>
 							<!--<p>Specify the dimensions of the loudspeaker enclosure to fine-tune the sound preset.</p>-->
 						</div>
@@ -363,7 +368,7 @@
 					 </div>
 					 
 					 <div class="menu-group">
-					 	<div id="magic-sound-calc-button" class="pill-button black menu-button">Apply Sound Adjustments</div>
+					 	<div id="magic-sound-calc-button" class="pill-button black menu-button" onclick="applySoundPresetWithName('Elements 885');">Apply Sound Adjustments</div>
 					 </div>
 				</div>
 			</div>
@@ -415,110 +420,110 @@
 						<div class="speaker-type-channels alternating type" id="speaker-setup-container">
 						
 							<div class="speaker-channel-item speaker-type-channel" id="speaker-type-channel-0">
-								<div class="speaker-driver-wrap">
+								<div class="speaker-driver-wrap delayed">
 									<img class="speaker-driver-img" src="drivers/mid-full.png" onclick="showSpeakerTypeSheet(0);">
 								</div>
-								<div class="speaker-channel-title">
+								<div class="speaker-channel-title delayed">
 									A
-									<div class="speaker-channel-dot dsp-colour red"></div>
-								</div><div class="speaker-type-label">Full-range</div>
-								<div class="speaker-role-label">L</div>
+									<div class="speaker-channel-dot dsp-colour red delayed"></div>
+								</div><div class="speaker-type-label delayed">Full-range</div>
+								<div class="speaker-role-label delayed">L</div>
 								
-								<div class="speaker-role-selector-wrap">
-									<div class="speaker-role-selector segmented black">
+								<div class="speaker-role-selector-wrap delayed">
+									<div class="speaker-role-selector segmented black delayed">
 										<div class="role-l" onclick="setSpeakerRole(0, 'left');">Left</div>
 										<div class="role-m" onclick="setSpeakerRole(0, 'mono');">Mono</div>
 										<div class="role-r" onclick="setSpeakerRole(0, 'right');">Right</div>
 									</div>
 								</div> 
 								
-								<div class="speaker-level-wrap">
-									<div class="speaker-level-slider red" id="speaker-level-slider-0"></div>
+								<div class="speaker-level-wrap delayed">
+									<div class="speaker-level-slider red delayed" id="speaker-level-slider-0"></div>
 								</div>
 								
-								<div class="speaker-enabled">
-									<img class="symbol-button" src="symbols-black/volume.svg">
+								<div class="speaker-enabled delayed">
+									<img class="symbol-button" onclick="toggleMute(0);" src="symbols-black/volume.svg">
 								</div>
 							</div>
 							
 							<div class="speaker-channel-item speaker-type-channel" id="speaker-type-channel-1">
-								<div class="speaker-driver-wrap">
+								<div class="speaker-driver-wrap delayed">
 									<img class="speaker-driver-img" src="drivers/mid-full.png" onclick="showSpeakerTypeSheet(1);">		
 								</div>	
-								<div class="speaker-channel-title">
+								<div class="speaker-channel-title delayed">
 									B
-									<div class="speaker-channel-dot dsp-colour yellow"></div>
-								</div><div class="speaker-type-label">Full-range</div>
-								<div class="speaker-role-label">R</div>
+									<div class="speaker-channel-dot dsp-colour yellow delayed"></div>
+								</div><div class="speaker-type-label delayed">Full-range</div>
+								<div class="speaker-role-label delayed">R</div>
 								
-								<div class="speaker-role-selector-wrap">
-									<div class="speaker-role-selector segmented black">
+								<div class="speaker-role-selector-wrap delayed">
+									<div class="speaker-role-selector segmented black delayed">
 										<div class="role-l" onclick="setSpeakerRole(1, 'left');">Left</div>
 										<div class="role-m" onclick="setSpeakerRole(1, 'mono');">Mono</div>
 										<div class="role-r" onclick="setSpeakerRole(1, 'right');">Right</div>
 									</div>
 								</div> 
 								
-								<div class="speaker-level-wrap">
-									<div class="speaker-level-slider yellow" id="speaker-level-slider-1"></div>
+								<div class="speaker-level-wrap delayed">
+									<div class="speaker-level-slider yellow delayed" id="speaker-level-slider-1"></div>
 								</div>
 								
-								<div class="speaker-enabled">
-									<img class="symbol-button" src="symbols-black/volume.svg">
+								<div class="speaker-enabled delayed">
+									<img class="symbol-button" onclick="toggleMute(1);" src="symbols-black/volume.svg">
 								</div>
 							</div>
 							
 							<div class="speaker-channel-item speaker-type-channel" id="speaker-type-channel-2">
-								<div class="speaker-driver-wrap">
+								<div class="speaker-driver-wrap delayed">
 									<img class="speaker-driver-img" src="drivers/mid-full.png" onclick="showSpeakerTypeSheet(2);">
 								</div>
-								<div class="speaker-channel-title">
+								<div class="speaker-channel-title delayed">
 									C
-									<div class="speaker-channel-dot dsp-colour green"></div>
-								</div><div class="speaker-type-label">Full-range</div>
-								<div class="speaker-role-label">L</div>
+									<div class="speaker-channel-dot dsp-colour green delayed"></div>
+								</div><div class="speaker-type-label delayed">Full-range</div>
+								<div class="speaker-role-label delayed">L</div>
 								
-								<div class="speaker-role-selector-wrap">
-									<div class="speaker-role-selector segmented black">
+								<div class="speaker-role-selector-wrap delayed">
+									<div class="speaker-role-selector segmented black delayed">
 										<div class="role-l" onclick="setSpeakerRole(2, 'left');">Left</div>
 										<div class="role-m" onclick="setSpeakerRole(2, 'mono');">Mono</div>
 										<div class="role-r" onclick="setSpeakerRole(2, 'right');">Right</div>
 									</div>
 								</div> 
 								
-								<div class="speaker-level-wrap">
-									<div class="speaker-level-slider green" id="speaker-level-slider-2"></div>
+								<div class="speaker-level-wrap delayed">
+									<div class="speaker-level-slider green delayed" id="speaker-level-slider-2"></div>
 								</div>
 								
-								<div class="speaker-enabled">
-									<img class="symbol-button" src="symbols-black/volume.svg">
+								<div class="speaker-enabled delayed">
+									<img class="symbol-button" onclick="toggleMute(2);" src="symbols-black/volume.svg">
 								</div>
 							</div>
 							
 							<div class="speaker-channel-item speaker-type-channel" id="speaker-type-channel-3">
-								<div class="speaker-driver-wrap">
+								<div class="speaker-driver-wrap delayed">
 									<img class="speaker-driver-img" src="drivers/mid-full.png" onclick="showSpeakerTypeSheet(3);">
 								</div>
-								<div class="speaker-channel-title">
+								<div class="speaker-channel-title delayed">
 									D
-									<div class="speaker-channel-dot dsp-colour blue"></div>
-								</div><div class="speaker-type-label">Full-range</div>
-								<div class="speaker-role-label">R</div>
+									<div class="speaker-channel-dot dsp-colour blue delayed"></div>
+								</div><div class="speaker-type-label delayed">Full-range</div>
+								<div class="speaker-role-label delayed">R</div>
 								
-								<div class="speaker-role-selector-wrap">
-									<div class="speaker-role-selector segmented black">
+								<div class="speaker-role-selector-wrap delayed">
+									<div class="speaker-role-selector segmented black delayed">
 										<div class="role-l" onclick="setSpeakerRole(3, 'left');">Left</div>
 										<div class="role-m" onclick="setSpeakerRole(3, 'mono');">Mono</div>
 										<div class="role-r" onclick="setSpeakerRole(3, 'right');">Right</div>
 									</div> 
 								</div>
 								
-								<div class="speaker-level-wrap">
-									<div class="speaker-level-slider blue" id="speaker-level-slider-3"></div>
+								<div class="speaker-level-wrap delayed">
+									<div class="speaker-level-slider blue delayed" id="speaker-level-slider-3"></div>
 								</div>
 								
-								<div class="speaker-enabled">
-									<img class="symbol-button" src="symbols-black/volume.svg">
+								<div class="speaker-enabled delayed">
+									<img class="symbol-button" onclick="toggleMute(3);" src="symbols-black/volume.svg">
 								</div>
 							</div>
 						
@@ -586,7 +591,7 @@
 						</div>
 					</header>
 					
-					<div id="arc-tabs" class="tabs top">
+					<!--<div id="arc-tabs" class="tabs top">
 								<div id="arc-measurements" onclick="selectScreenTab('arc-screen-tabs', 'arc-measurements-tab', 'arc-tabs', 'arc-measurements');">
 									Measurements
 								</div>
@@ -595,11 +600,11 @@
 									Compensation
 								</div>
 								
-							</div>
+							</div>-->
 				
-					<div class="scroll-area graph-scroll-area">
+					<div class="scroll-area graph-scroll-area no-tabs">
 					
-					<div class="screen-tabs" id="arc-screen-tabs">
+					<!--<div class="screen-tabs" id="arc-screen-tabs">
 						<div class="screen-tab" id="arc-compensation-tab">
 						
 							<div class="menu-group">
@@ -634,9 +639,34 @@
 						<div class="screen-tab hidden" id="arc-measurements-tab">
 						
 						</div>
-						
+					</div> -->
 					
-					</div>
+					<div class="menu-group">
+								<h2>Presets</h2>
+								<div class="menu-item icon left checkbox checked" id="arc-preset-off">
+									<img class="menu-icon left" src="symbols-black/checkmark.svg">
+									<div class="menu-label">Off</div>
+								</div>
+								<div id="arc-preset-list">
+								
+									<div class="menu-item icon left checkbox">
+										<img class="menu-icon left" src="symbols-black/checkmark.svg">
+										<div class="menu-label">Sofa Center</div>
+									</div>
+									
+									<div class="menu-item icon left checkbox">
+										<img class="menu-icon left" src="symbols-black/checkmark.svg">
+										<div class="menu-label">Sofa Left</div>
+									</div>
+								</div>
+							
+							</div>
+							<div class="menu-group">
+								<div class="menu-item icon left">
+									<img class="menu-icon left" src="symbols-black/add.svg">
+									<div class="menu-label">Import Preset...</div>
+								</div>
+							</div>
 			</div>
 			
 			</div>
@@ -934,9 +964,10 @@
 								<div class="menu-label">Paste Filters</div>
 							</div>-->
 							
-							<div class="menu-item icon left">
+							<div class="menu-item icon left" id="test-tone-toggle" onclick="$('#test-tone-toggle').toggleClass('on');">
 								<img class="menu-icon left" src="symbols-black/tuning-fork.svg">
 								<div class="menu-label">Test Tone</div>
+								<div class="menu-toggle"><div>I</div><div>O</div></div>
 							</div>
 							
 							<div class="menu-item icon left">
@@ -974,14 +1005,18 @@
 				
 				<!--<div class="menu-button blue round"><img src="symbols/add.svg"></div>-->
 				
-				<div class="menu-group wifi-connected-wrap">
+				<div class="menu-group warning beginning wifi-not-connected hidden" id="no-wifi-warning">
+					<h2>No Connection, Check Settings</h2>
+				</div>
+				
+				<div class="menu-group wifi-connected-wrap wifi-connected hidden">
 					<h2>Connected</h2>
 					
-					<!--<div class="menu-item icon left wifi-connected-item">
+					<div class="menu-item icon left wifi-connected-item">
 						<img class="menu-icon left" src="symbols-black/wifi-3.svg">
-						<div class="menu-label">BeoAccess</div>
+						<div class="menu-label"></div>
 					
-					</div>-->
+					</div>
 				</div>
 				
 				<div class="menu-group wifi-saved-wrap">
@@ -1013,11 +1048,15 @@
 				<div class="menu-group">
 					<p>If you don't see your network, try moving the system closer to the base station.</p>
 					
-					<div class="menu-item icon left">
+					<div class="menu-item icon left" onclick="addOtherNetwork();">
 						<img class="menu-icon left" src="symbols-black/add.svg">
 						<div class="menu-label">Add Other Network...</div>
 					
 					</div>
+				</div>
+				
+				<div class="menu-group float-bottom wifi-not-connected hidden">
+					<div id="apply-wifi-button" class="pill-button black menu-button" onclick="finishWiFi();">Apply Wi-Fi Settings</div>
 				</div>
 			</div>
 		
@@ -1089,6 +1128,26 @@
 					<div class="menu-item icon left" onclick="ask('shutdown-ask-menu');">
 						<img class="menu-icon left" src="symbols-black/shutdown.svg">
 						<div class="menu-label">Shut Down or Restart...</div>
+					</div>
+					
+				</div>
+				
+				<div class="menu-group">
+					<h2>Connected Screen</h2>
+					
+					<div class="menu-item icon left" onclick="connectedScreen('refresh');">
+						<img class="menu-icon left" src="symbols-black/settings.svg">
+						<div class="menu-label">Refresh Screen</div>
+					</div>
+					
+					<div class="menu-item icon left" onclick="connectedScreen('animate');">
+						<img class="menu-icon left" src="symbols-black/settings.svg">
+						<div class="menu-label">Animate</div>
+					</div>
+					
+					<div class="menu-item icon left" onclick="connectedScreen('quitScreen');">
+						<img class="menu-icon left" src="symbols-black/shutdown.svg">
+						<div class="menu-label">Quit</div>
 					</div>
 					
 				</div>
@@ -1214,6 +1273,79 @@
 				<div class="menu-group">
 					<div id="remote-pair-button ez2-unpaired" class="pill-button black menu-button">Connect Remote...</div>
 					<div id="remote-unpair-button ez2-paired" class="pill-button red menu-button hidden">Forget This Remote</div>
+				</div>
+				
+				
+			</div>
+		
+		</div>
+		
+		<div class="tab-content" id="tab-remote-simulator">
+			<header>
+				<!--<img src="symbols/back.svg" class="symbol-button left">-->
+				<!--<div class="header-text-button right" id="tab-edit-button">Edit Tabs</div>-->
+				<h1>Beo4</h1>
+			</header>
+		
+			<div class="scroll-area">
+				
+				
+				<div class="menu-group no-padding beginning" id="beo4-display">
+					N.MUSIC
+				</div>
+				
+				<div class="menu-group beo4-group">
+					<div class="beo4-row">
+						<div>TV</div>
+						<div>Light</div>
+						<div>Radio</div>
+					</div>
+					<div class="beo4-row">
+						<div>DTV</div>
+						<div>DVD</div>
+						<div>CD</div>
+					</div>
+					<div class="beo4-row">
+						<div>V.MEM</div>
+						<div>Text</div>
+						<div>A.MEM</div>
+					</div>
+				</div>
+				
+				<div class="menu-group beo4-group">
+					<div class="beo4-row">
+						<div>7</div>
+						<div>8</div>
+						<div>9</div>
+					</div>
+					<div class="beo4-row">
+						<div>4</div>
+						<div>5</div>
+						<div>6</div>
+					</div>
+					<div class="beo4-row">
+						<div>1</div>
+						<div>2</div>
+						<div>3</div>
+					</div>
+					<div class="beo4-row">
+						<div>Text</div>
+						<div>0</div>
+						<div>Menu</div>
+					</div>
+				</div>
+				
+				<div class="menu-group beo4-group">
+					<div class="beo4-row">
+						<div>List</div>
+						<div class="beo4-vol-up"><img src="symbols/chevron.svg"></div>
+						<div>Exit</div>
+					</div>
+					<div class="beo4-row">
+						<div>Stop</div>
+						<div class="beo4-vol-down"><img src="symbols/chevron.svg"></div>
+						<div class="beo4-standby"><span></span></div>
+					</div>
 				</div>
 				
 				
@@ -1369,6 +1501,10 @@
 						<div class="menu-label">BeoLink</div>
 					</div>
 					
+					<div class="menu-item icon left tab-bar-capable" onclick="selectTab('remote-simulator');" id="more-menu-item-remote-simulator" data-address="remote-simulator">
+						<img class="menu-icon left" src="symbols-black/remote.svg">
+						<div class="menu-label">Remote Simulator</div>
+					</div>
 					
 					<div class="menu-item icon left tab-bar-capable" onclick="selectTab('system-tools');" id="more-menu-item-system-tools" data-address="system-tools">
 						<img class="menu-icon left" src="symbols-black/settings.svg">
@@ -1642,14 +1778,15 @@
 			<div class="amplifier-illustration">
 				<img src="4ca-illustration.svg">
 			</div>
-			<h2>Amplifier Channels</h2>
-			<p>BeoCreate 4-Channel Amplifier has four channels. In the application, the channels are marked with colours and letters A–D, shown above.</p>
+			<h1>BeoCreate 4-Channel Amplifier</h1>
+			<h2>Channels</h2>
+			<p>BeoCreate 4-Channel Amplifier has four channels. In the application, they are indicated with colours and letters <span class="red">A</span>–<span class="blue">D</span>, shown above.</p>
 			
 			<h2>Connection Tips</h2>
-			<p>For the best performance:</p>
+			<p>For the best performance, connect drivers as follows:</p>
 			<ul>
-				<li>Connect large drivers, such as woofers, to channels A and B</li>
-				<li>Connect small drivers, such as tweeters, to channels C and D</li>
+				<li>Large drivers, such as woofers, to channels <span class="red">A</span> and <span class="yellow">B</span></li>
+				<li>Small drivers, such as tweeters, to channels <span class="green">C</span> and <span class="blue">D</span></li>
 			</ul>
 			<p>Remember to use the correct polarity (plus and minus).</p>
 			
@@ -1663,7 +1800,7 @@
 			<h2>Selecting a Loudspeaker Type</h2>
 			<p>To choose a loudspeaker type, tap the picture of the loudspeaker driver. From the panel, select the closest match to what is connected to the amplifier. A crossover is then automatically set up.</p>
 			<p>A crossover splits the sound spectrum to bands, sending each of them to the appropriate loudspeaker driver. This protects the drivers from signals they are not designed to play.</p>
-			<div class="pill-button" onclick="help('4ca-legend');">Connection Guide</div>
+			<div class="pill-button" onclick="help('4ca-legend');">Loudspeaker Channels</div>
 			
 			<h2>Advanced Crossover</h2>
 			<p>The automatic crossover is a general approximation. To customise the crossover for your loudspeaker, use the sliders in Crossover &amp; Filters screen.</p>
@@ -1755,6 +1892,7 @@
 				<li>Bright curves show the <strong>magnitude response</strong> of the channels (also often called frequency response).</li>
 				<li>Dim curves indicate the <strong>phase response</strong> of the channels.</li>
 			</ul>
+			<div class="pill-button" onclick="help('4ca-legend');">Loudspeaker Channels</div>
 			<p>When an individual channel is selected, the curves of other channels will be dimmed to make the selected channel stand out.</p>
 			<h2>Magnitude Response</h2>
 			<p>Indicates the frequency-dependent loudness of output signal relative to the input signal. Frequency ("pitch") of the signal is shown on the horizontal axis, from 10 to 20000 Hz.</p>
@@ -1807,6 +1945,7 @@
 			<h2>Overview</h2>
 			<p>Crossover divides the sound spectrum between loudspeaker drivers, so that each driver only plays the the frequencies they are designed for.</p>
 			<p>Colours of the sliders match the four available loudspeaker channels.</p>
+			<div class="pill-button" onclick="help('4ca-legend');">Loudspeaker Channels</div>
 			<h2>Presets</h2>
 			<p>Crossover settings are always customisable, but the following features will apply predefined settings:</p>
 			<ul>
@@ -2076,8 +2215,10 @@
 </div>
 
 <script src='scripts/jsdsp.js'></script>
+
 <script src='scripts/elements-comms.js'></script>
 <script src='scripts/elements-dsp.js'></script>
+<script src='scripts/elements-grapher.js'></script>
 <script src='scripts/elements-wifi.js'></script>
 <script src='scripts/elements-system.js'></script>
 <script src='scripts/elements-player.js'></script>

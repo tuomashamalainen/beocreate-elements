@@ -1,44 +1,12 @@
 // BANG & OLUFSEN
-// Elements
+// BeoCreate Elements
 // DSP
-// All sound-related functions are in this file.
+// All sound-related functions are in this file. Plotting graphs has been moved to elements-grapher.js for better portability.
 
 var sampleRate = 48000;
 var maxFilters = 14; // Maximum amount of filters supported by the program, including low-pass and high-pass filters at positions 0, 1, 2 and 3.
 
 var channels = []; // Stores all sound settings for all channels.
-
-var filterCoeffs = [];
-var polarity = [0,0,0,0]; // 0 = normal, 1 = inverted
-
-var filterGraphs = [];
-var phaseGraphs = [];
-var masterFilterGraphs = [];
-var masterPhaseGraphs = [];
-
-
-// GRAPH OPTIONS
-var graphLength = 512;
-var dpRatio = window.devicePixelRatio;
-
-var filterGraphPalette = ["#ed4149", "#f8a65e","#51c0b7", "#578fd7", "rgba(255,255,255,0.5)"];
-var fadedFilterGraphPalette = ["rgba(237, 65, 72, 0.5)", "rgba(248, 166, 94, 0.5)", "rgba(81, 192, 183, 0.5)", "rgba(86, 142, 215, 0.5)", "rgba(255,255,255,0.1)"];
-var phaseGraphPalette = ["rgba(237, 65, 72, 0.4)", "rgba(248, 166, 94, 0.4)", "rgba(81, 192, 183, 0.4)", "rgba(86, 142, 215, 0.4)"];
-var fadedPhaseGraphPalette = ["rgba(237, 65, 72, 0.2)", "rgba(248, 166, 94, 0.2)", "rgba(81, 192, 183, 0.2)", "rgba(86, 142, 215, 0.2)"];
-
-var xOptions = {scaling: "logarithmic", base: 10, ticks: [[100, "100"], [1000, "1k"], [10000, "10k"]], minorTicks: [20,30,40,50,60,70,80,90,200,300,400,500,600,700,800,900,2000,3000,4000,5000,6000,7000,8000,9000], min: 10, max: 20000, showLabels: false, margin: false};
-var xBackOptions = {scaling: "logarithmic", base: 10, noTicks: 0, min: 10, max: 20000, showLabels: false, margin: false};
-var yOptions = {showLabels: false, max: 15, min: -15, margin: false, ticks: [[10, "+10"], [5, ""], [0, "0"], [-5, ""], [-10, "-10"]]};
-var y2Options = {showLabels: false, max: mathPI, min: -mathPI, margin: false, noTicks: 0};
-var yBackOptions = {showLabels: false, max: mathPI, min: -mathPI, margin: false, noTicks: 0};
-var gridOptions = {tickColor: "rgba(255,255,255,0.05)", color: "rgba(255,255,255,0.5)", outlineWidth: 0, labelMargin: 0}; // On dark
-//var gridOptions = {tickColor: "rgba(0,0,0,0.05)", color: "rgba(0,0,0,0.5)", outlineWidth: 0, labelMargin: 0}; // On light
-
-var magLineWidth = 1.5;
-var phaseLineWidth = 1;
-
-
-
 
 
 var channelColourNames = ["red", "yellow", "green", "blue"];
@@ -49,6 +17,7 @@ var channelColourNames = ["red", "yellow", "green", "blue"];
 // Processes any data received from the speakers marked with the "dsp" header.
 
 function dspDataReceiver(content) {
+	//console.log(content);
 	switch (content.type) {
 		case "customPresets":
 			//console.log(content.presets);
@@ -62,7 +31,7 @@ function dspDataReceiver(content) {
 				if (content.currentPreset != undefined) {
 					$(".custom-sound-preset-item-"+content.currentPreset).addClass("checked");
 					if (content.presetModified) {
-						$(".custom-sound-preset-item-"+content.currentPreset+" .menu-icon").attr("src", "symbols-black/dot.svg");
+						$(".custom-sound-preset-item-"+content.currentPreset+" .menu-icon").attr("src", "symbols-black/line.svg");
 					}
 				}
 			} else {
@@ -93,16 +62,27 @@ function dspDataReceiver(content) {
 		case "channelSettings":
 			channels = content.channels;
 			break;
-		case "speakerTypesAndRoles":
+		case "speakerSetup":
 			for (var c = 0; c < content.speakerTypes.length; c++) {
 				channels[c].type = content.speakerTypes[c];
 				channels[c].role = content.speakerRoles[c];
+				channels[c].mute = content.muteStates[c];
 			}
-			loadSpeakerTypesAndRoles();
+			loadSpeakerSetup();
 			break;
 		case "allFilters":
 			channels = content.channels;
 			loadFilters();
+			break;
+		case "mute":
+			if (content.muteChannel != undefined) {
+				channels[content.muteChannel].mute = content.mute;
+				if (content.mute == true) {
+					$("#speaker-type-channel-"+content.muteChannel+" .speaker-enabled img").attr("src", "symbols-black/volume-mute.svg").removeClass("selected");
+				} else {
+					$("#speaker-type-channel-"+content.muteChannel+" .speaker-enabled img").attr("src", "symbols-black/volume.svg").addClass("selected");
+				}
+			}
 			break;
 	}
 }
@@ -201,6 +181,10 @@ function applySoundPreset() {
 		sendToProduct({header: "dsp", content: {operation: "loadCustomPreset", presetIndex: preflightingSoundPreset, settings: presetPreflightSettings}});
 		preflightingSoundPreset = null;
 	}
+}
+
+function applySoundPresetWithName(presetName) {
+	sendToProduct({header: "dsp", content: {operation: "loadCustomPreset", presetName: presetName}});
 }
 
 
@@ -669,7 +653,7 @@ function showSpeakerTypeSheet(channel) {
 	ask("speaker-type-ask-menu", [channelString[channel].toUpperCase()]);
 }
 
-function loadSpeakerTypesAndRoles() {
+function loadSpeakerSetup() {
 	if (channels) {
 		for (var c = 0; c < channels.length; c++) {
 			// Types
@@ -694,6 +678,14 @@ function loadSpeakerTypesAndRoles() {
 			$("#speaker-type-channel-"+c+" .speaker-role-label").text(roleCharacter);
 			$("#speaker-type-channel-"+c+" .speaker-role-selector div").removeClass("selected");
 			$("#speaker-type-channel-"+c+" .speaker-role-selector .role-"+roleCharacter.toLowerCase()).addClass("selected");
+			
+			// Mute state
+			
+			if (channels[c].mute == true) {
+				$("#speaker-type-channel-"+c+" .speaker-enabled img").attr("src", "symbols-black/volume-mute.svg").removeClass("selected");
+			} else {
+				$("#speaker-type-channel-"+c+" .speaker-enabled img").attr("src", "symbols-black/volume.svg").addClass("selected");
+			}
 		}
 	}
 }
@@ -757,6 +749,16 @@ function setSpeakerRole(channel, role) {
 	$("#speaker-type-channel-"+channel+" .speaker-role-selector div").removeClass("selected");
 	$("#speaker-type-channel-"+channel+" .speaker-role-selector .role-"+roleCharacter.toLowerCase()).addClass("selected");
 	sendToProduct({header: "dsp", content: {operation: "setRole", channel: channel, role: role}});
+}
+
+function toggleMute(channel) {
+	if (channels[channel].mute == false) {
+		//$("#speaker-type-channel-"+channel+" .speaker-enabled img").attr("src", "symbols-black/volume-mute.svg").removeClass("selected");
+		sendToProduct({header: "dsp", content: {operation: "setMute", channel: channel, mute: true}});
+	} else {
+		//$("#speaker-type-channel-"+channel+" .speaker-enabled img").attr("src", "symbols-black/volume.svg").addClass("selected");
+		sendToProduct({header: "dsp", content: {operation: "setMute", channel: channel, mute: false}});
+	}
 }
 
 
@@ -912,10 +914,8 @@ function loadFilters() {
 			}
 			if (channels[c].invert) {
 				$("#invert-selector-item-"+c).addClass("selected");
-				polarity[c] = 1;
 			} else {
 				$("#invert-selector-item-"+c).removeClass("selected");
-				polarity[c] = 0;
 			}
 			updateCrossoverSliderLabels(c, hpValue, lpValue);
 			$("#crossover-slider-"+c).slider("values", 0, convertHz(hpValue, "linear"));
@@ -1016,7 +1016,7 @@ function toggleSpeakerTerminalGuide() {
 
 // CROSSOVER
 
-var filterDrawDelay = 50; // Change to make graph respond faster.
+var filterDrawDelay = 20; // Change to make graph respond faster.
 var filterDrawTimeout = null;
 var filterSendDelay = 100; // Change to send filter parameters faster.
 var filterSendTimeout = null;
@@ -1317,11 +1317,9 @@ function startCrossoverFineAdjustment(channel, filter) {
 function invertChannel(channel) {
 	if (channels[channel].invert) {
 		invertBool = false;
-		polarity[channel] = 0;
 		$(".invert-channel-"+channel).removeClass("selected");
 	} else {
 		invertBool = true;
-		polarity[channel] = 1;
 		$(".invert-channel-"+channel).addClass("selected");
 	}
 	
@@ -1853,264 +1851,3 @@ function getFilterCopyPasteMenu(target) {
 	//console.log(menu);
 	return menu;
 }
-
-
-// GRAPHER
-
-var emptyGraph = [];
-
-function resetGraphs(Fs) {
-	emptyGraph = [];
-	for (var i = 0; i < graphLength; i++) { // Generate an empty graph
-		freq = logScale(i / graphLength, 0.0001, 0.5);	
-		emptyGraph.push([freq * Fs, 0]);	
-	}
-	for (var c = 0; c < 4; c++) { // Loop through channels
-		filterGraphs[c] = [];
-		phaseGraphs[c] = [];
-		filterCoeffs[c] = [];
-		for (var f = 0; f < maxFilters; f++) { // Loop through filters
-			filterGraphs[c].push(emptyGraph);
-			phaseGraphs[c].push(emptyGraph);
-			filterCoeffs[c].push([1,0,0,1,0,0]);
-		}
-		masterFilterGraphs.push(emptyGraph);
-		masterPhaseGraphs.push(emptyGraph);
-	}
-	//drawPhaseResponse();
-	//drawMagnitudeResponse();
-}
-
-
-function loadTestGraphs() {
-	resetGraphs(48000);
-	//filter(0, 0, "hp", getRandomInt(100, 1000), -4, getRandom(0.7, 2));
-	//filter(1, 0, "hp", getRandomInt(100, 1000), -4, getRandom(0.7, 2));
-	//filter(2, 0, "lp", getRandomInt(100, 1000), -4, getRandom(0.7, 2));
-	//filter(3, 0, "lp", getRandomInt(100, 1000), -4, getRandom(0.7, 2));
-	channels = [];
-	for (var c = 0; c < 4; c++) { // Loop through channels
-		channels.push({filters: [], crossover: {}});
-		for (var f = 4; f < maxFilters; f++) { // Loop through filters
-			filters = {};
-			filters.Fc = 1000;
-			filters.Q = 0.7;
-			filters.boost = 0;
-			filters.gain = 0;
-			filters.enabled = true;
-			channels[c].filters.push(filters);
-		}
-		channels[c].crossover = {hp: null, lp: null};
-	}
-	//filter(0, 2, "peak", getRandomInt(80, 11000), getRandomInt(-10, 10), getRandom(0.7, 2));
-	//filter(1, 2, "peak", getRandomInt(80, 11000), getRandomInt(-10, 10), getRandom(0.7, 2));
-	//filter(2, 2, "peak", getRandomInt(100, 1000), -4, getRandom(0.7, 2));
-	//filter(3, 2, "peak", getRandomInt(80, 11000), getRandomInt(-10, 10), getRandom(0.7, 2));
-	
-	drawMagnitudeResponse();
-	drawPhaseResponse();
-}
-
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min) ) + min;
-}
-
-function getRandom(min, max) {
-    return (Math.random() * (max - min) ) + min;
-}
-
-/*
-function invertChannel(channel) {
-	if (polarity[channel] == 0) { 
-		// Invert
-		polarity[channel] = 1;
-	} else {
-		// Normal
-		polarity[channel] = 0;
-	}
-	generateMasterGraphs(channel);
-	drawPhaseResponse(channel);
-	drawMagnitudeResponse(channel);
-}*/
-
-
-function clearFilter(channel, filter) {
-	//console.log("Cleared filter "+filter+" of channel "+channel+".");
-	filterGraphs[channel][filter] = emptyGraph;
-	phaseGraphs[channel][filter] = emptyGraph;
-	filterCoeffs[channel][filter] = [1,0,0,1,0,0];
-	generateMasterGraphs(channel);
-}
-
-function createFilter(channel, filter, type, center, boost, Q, enabled) {
-	if (enabled) {
-		switch (type) {
-			case "hp": // high-pass
-				coeffs = highPass(sampleRate, center, 0);
-				break;
-			case "lp": // low-pass
-				coeffs = lowPass(sampleRate, center, 0);
-				break;
-			case "peak": // peak
-				coeffs = peak(sampleRate, center, boost, Q, 0);
-				break;
-		}
-		filterCoeffs[channel][filter] = coeffs;
-		generateGraph(channel, filter, sampleRate);
-	} else {
-		filterCoeffs[channel][filter] == [1,0,0,1,0,0];
-		filterGraphs[channel][filter] = emptyGraph;
-		phaseGraphs[channel][filter] = emptyGraph;
-	}
-	
-	generateMasterGraphs(channel);
-	//drawMagnitudeResponse(channel, filter);
-	//drawPhaseResponse(channel);
-	//lastFilter = filter;
-}
-
-
-
-function generateGraph(channel, filter, Fs) {
-	coeffs = filterCoeffs[channel][filter];
-	
-	a0 = coeffs[0];
-	a1 = coeffs[1];
-	a2 = coeffs[2];
-	b0 = coeffs[3];
-	b1 = coeffs[4];
-	b2 = coeffs[5];
-	
-	
-	filterGraphs[channel][filter] = [];
-	phaseGraphs[channel][filter] = [];
-	for (var i = 0; i < graphLength; i++) {
-		freq = logScale(i / graphLength, 0.0001, 0.5);
-		//console.log(freq);
-		z = freq*Fs;
-		// math.js implementation:
-		c0 = math.complex(0,-0 * freq * 2 * mathPI);
-		c1 = math.complex(0,-1 * freq * 2 * mathPI);
-		c2 = math.complex(0,-2 * freq * 2 * mathPI);
-		res0 = math.multiply(b0, math.exp(c0));
-		res0 = math.add(res0, math.multiply(b1, math.exp(c1)));
-		res0 = math.add(res0, math.multiply(b2, math.exp(c2)));
-		resP = math.multiply(a0, math.exp(c0));
-		resP = math.add(resP, math.multiply(a1, math.exp(c1)));
-		resP = math.add(resP, math.multiply(a2, math.exp(c2)));
-		response = math.divide(res0, resP);
-
-		// Simplified (faster) implementation:
-//		zeros = b0 + b1 * Math.pow(z, -1) + b2 * Math.pow(z, -2);
-//		poles = 1 + -1*a1 * Math.pow(z, -1) + -1*a2 * Math.pow(z, -2);
-//		resN = zeros / poles;
-//		console.log(resN);
-		
- 		
-		var tempMag = math.abs(response);
-		if (tempMag == 0)
-			tempMag = -300;
-		else
-			tempMag = 20 * Math.log10(tempMag);
-		
-		filterGraphs[channel][filter].push([freq * Fs, tempMag]);
-		
-		// Phase
-		phaseGraphs[channel][filter].push([freq * Fs, math.atan2(response.im, response.re)]);
-	}
-	
-}
-
-function generateMasterGraphs(channel) {
-	// Generate the combined graphs from individual graphs
-	masterFilterGraphs[channel] = [];
-	masterPhaseGraphs[channel] = [];
-		
-	for (var i = 0; i < graphLength; i++) {
-		plotPoint = 0;
-		plotPhasePoint = 0;
-		plotFreq = null;
-		for (var a = 0; a < maxFilters; a++) {
-			if (filterGraphs[channel][a]) {
-				plotFreq = filterGraphs[channel][a][i][0];
-				plotPoint += filterGraphs[channel][a][i][1];
-				plotPhasePoint += phaseGraphs[channel][a][i][1];
-			}
-		}
-		masterFilterGraphs[channel].push([plotFreq, plotPoint]);
-
-		if (polarity[channel] == 1) { // Polarity is inverted
-			plotPhasePoint+= mathPI;
-		}
-		if (plotPhasePoint > mathPI) plotPhasePoint-= 2*mathPI;
-		if (plotPhasePoint < -mathPI) plotPhasePoint+= 2*mathPI;
-		
-		masterPhaseGraphs[channel].push([plotFreq, plotPhasePoint]);
-		
-		// Cut the phase graph so there aren't vertical lines going across the graph
-		if (i) {
-			if (Math.abs(masterPhaseGraphs[channel][i-1][1] - masterPhaseGraphs[channel][i][1]) > 0.5 && masterPhaseGraphs[channel][i-1][1] != null) {
-				masterPhaseGraphs[channel][i][1] = null;
-			}
-		}
-	}
-}
-
-function logScale(value, min, max) {
-	return Math.pow(2, Math.log(max / min) / Math.LN2 * value) * min;
-}
-
-
-
-
-
-function drawPhaseResponse(channel) {
-	palette = [];
-	if (channel != undefined) { // draw the response of a single filter
-		palette = fadedPhaseGraphPalette.slice(0);
-		palette[channel] = phaseGraphPalette[channel];
-	} else { // draw the combined response of all filters*/
-		palette = phaseGraphPalette.slice(0);
-		
-	}
-	
-	Flotr.draw(document.getElementById('dsp-graph-container-back'), [
-		{data: masterPhaseGraphs[0], lines: {lineWidth: phaseLineWidth}},
-		{data: masterPhaseGraphs[1], lines: {lineWidth: phaseLineWidth}},
-		{data: masterPhaseGraphs[2], lines: {lineWidth: phaseLineWidth}},
-		{data: masterPhaseGraphs[3], lines: {lineWidth: phaseLineWidth}}], {resolution: dpRatio, yaxis: yBackOptions, xaxis: xBackOptions, shadowSize: 0, grid: gridOptions, colors: palette});
-}
-
-function drawMagnitudeResponse(channel, filter) {
-	palette = [];
-	if (channel != undefined) { // draw the response of a single filter
-	
-		// Order graphs so that the selected one is in front.
-		channelOrder = [];
-		tempPalette = fadedFilterGraphPalette.slice(0);
-		for (var i = 0; i < 4; i++) {
-			if (i != channel) {
-				channelOrder.push(i);
-				palette.push(tempPalette[i]);
-			}
-		}
-		channelOrder.push(channel);
-		palette.push(filterGraphPalette[channel]);
-		palette.push(tempPalette[channel]);
-		
-		Flotr.draw(document.getElementById('dsp-graph-container'), [
-		{data: masterFilterGraphs[channelOrder[0]], lines: {lineWidth: magLineWidth}},
-		{data: masterFilterGraphs[channelOrder[1]], lines: {lineWidth: magLineWidth}},
-		{data: masterFilterGraphs[channelOrder[2]], lines: {lineWidth: magLineWidth}},
-		{data: masterFilterGraphs[channelOrder[3]], lines: {lineWidth: magLineWidth}},
-		{data: filterGraphs[channel][filter], lines: {lineWidth: magLineWidth, fill: true}}], {resolution: dpRatio, yaxis: yOptions, y2axis: y2Options, xaxis: xOptions, shadowSize: 0, grid: gridOptions, colors: palette});
-	} else {
-		palette = filterGraphPalette.slice(0);
-		Flotr.draw(document.getElementById('dsp-graph-container'), [
-		{data: masterFilterGraphs[0], lines: {lineWidth: magLineWidth}},
-		{data: masterFilterGraphs[1], lines: {lineWidth: magLineWidth}},
-		{data: masterFilterGraphs[2], lines: {lineWidth: magLineWidth}},
-		{data: masterFilterGraphs[3], lines: {lineWidth: magLineWidth}}], {resolution: dpRatio, yaxis: yOptions, y2axis: y2Options, xaxis: xOptions, shadowSize: 0, grid: gridOptions, colors: palette});
-	}
-}
-

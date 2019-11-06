@@ -177,6 +177,26 @@ function createTextScroller(i, textWidth) {
 }
 
 
+// ALBUM ART SHOW/HIDE
+$( "#top-text" ).draggable({
+	//cursorAt: { top: 0, left: 0 },
+	//delay: 500,
+	scroll: false,
+	helper: function( event ) {
+	return $( "<div class='ui-widget-header' style='display: none;'>I'm a custom helper</div>" );
+	},
+	start: function( event, ui ) {
+		
+	},
+	stop: function( event, ui ) {
+		
+	},
+	drag: function( event, ui ) {
+		
+	}
+});
+
+
 
 // ARC FUNCTIONS
 
