@@ -12,3 +12,5 @@ BeoCreate Elements is an open-design sound system based on [BeoCreate 4-Channel 
 - Adjustable equaliser filters for all channels (10 per channel)
 - Overall tone controls (bass/treble)
 - Save adjustments to presets, recall at any time
+
+![BeoCreate Elements](https://raw.githubusercontent.com/tuomashamalainen/beocreate-elements/master/BeoAppStackRender.jpg)
