@@ -34,4 +34,4 @@ The models for building the enclosure are available **for personal use** within 
 
 The models correspond to the final version, whose design and assembly are further described in the thesis.
 
-If you build a Beocreate Core, I would love to hear from you. Please @ me on Twitter (@tuomas\_h) with any questions and/or tag me on Instagram (@tuomas\_h). You can also tag Bang & Olufsen Create in your posts (@beocreate).
+If you build a Beocreate Core, I would love to hear from you. Please @ me on Twitter ([@tuomas\_h](https://twitter.com/tuomas_h)) with any questions and/or tag me on Instagram ([@tuomas\_h](https://instagr.am/tuomas_h)). You can also tag Bang & Olufsen Create in your posts ([@beocreate](https://instagr.am/beocreate)).
