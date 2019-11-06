@@ -28,9 +28,11 @@ var piSystem = require("./beocreate_essentials/pi_system_tools");
 var wifi = require("./beocreate_essentials/wifi_setup");
 var sourceModule = require("./beocreate_essentials/sources");
 var beoLED = require("./beocreate_essentials/led");
+var aplay = require("aplay");
 //var beoEssence = require("./beocreate_extras/essence");
 var fs = require('fs');
 var http = require('http');
+var child_process = require('child_process');
 
 var beoCom = communicator();
 var beoSources = sourceModule.SourceManager();
@@ -76,24 +78,49 @@ if (!fs.existsSync(presetFolder)) {
     fs.mkdirSync(presetFolder);
 }
 
-beoCom.start({name: systemName}); // Opens the server up for remotes to connect.
+beoCom.start(); // Opens the server up for remotes to connect.
+//beoCom.start({name: systemName, txtRecord: {"device_type": beoconfig.systemInformation.systemModelID}}); // Opens the server up for remotes to connect.
 
 
 wifi.initialise('autoHotspot');
 
 var dspDictionary = beoDSP.readDictionary("/home/pi/dsp/ParamAddress.dat"); // Reads the DSP parameter addresses into memory.
-beoDSP.connectDSP(function(success) {  
+
+var dspInitialised = false;
+var checksumMatch = false;
+/*beoDSP.connectDSP(function(success) {  
 	if (success) {
 		for (var i = 0; i < 3; i++) {
 			// Before the phantom write issue is fixed in the Sigma DSP Daemon, this will read from a register three times to get past them.
 			beoDSP.readDSP(16, function(response) { 
-			
+				if (i = 2) {
+					if (!dspInitialised) {
+						dspInitialised = true;
+						if (beoconfig.dspChecksum != null) {
+							compareDSPChecksum(beoconfig.dspChecksum, function(result) {
+								if (result == true) {
+									console.log("DSP checksum matches, loading sound adjustments...");
+									checksumMatch = true;
+									loadAllDSPSettings();
+								} else {
+									checksumMatch = false;
+									console.log("DSP checksum mismatch. Not initialising sound adjustments.");
+									beoLED.fadeTo({rgb: [255, 128, 0], speed: "fast"});
+								}
+							});
+						} else {
+							console.log("No DSP checksum on file. Not initialising sound adjustments.");
+							checksumMatch = false;
+							beoLED.fadeTo({rgb: [255, 128, 0], speed: "fast"});
+						}
+					}
+				}
 			}, true);
 		}
-		loadAllDSPSettings();
+		
 	}
 }); // Opens a link with the SigmaDSP daemon.
-
+*/
 
 
 // COMMUNICATION WITH CLIENTS
@@ -129,12 +156,22 @@ beoCom.on("data", function(data, connection){
 		case "led":
 			beoLED.fadeTo({rgb: data.content.rgb, speed: data.content.speed});
 			break;
+		case "connectedScreen":
+			if (data.content.operation == "refresh") {
+				// Sends a refresh message to all connected clients. Only the "viewscreen" running on the embedded browser (displayed on a TV or a BeoSound 5 screen, for example) should respond to it.
+				beoCom.send({header: "connectedScreen", content: {operation: "refresh"}});
+			}
+			if (data.content.operation == "passThroughCommand") {
+				// A passthrough of simple commands for testing.
+				beoCom.send({header: "connectedScreen", content: {operation: "passThroughCommand", commandContent: data.content.commandContent}});
+			}
+			break;
 	}
 });
 
 
 function handshake(content) {
-	beoCom.send({header: "handshake", content: {cacheIndex: cacheIndex, systemName: systemName}});
+	beoCom.send({header: "handshake", content: {cacheIndex: cacheIndex, systemName: systemName, wifiMode: wifi.mode()}});
 }
 
 
@@ -160,14 +197,16 @@ function dsp(content) {
 		case "getChannelSettings":
 			beoCom.send({header: "dsp", content: {type: "channelSettings", channels: beoconfig.channels}});
 			break;
-		case "getSpeakerTypesAndRoles":
+		case "getSpeakerSetup":
 			types = [];
 			roles = [];
+			muteStates = [];
 			for (var c = 0; c < beoconfig.channels.length; c++) {
 				types.push(beoconfig.channels[c].type);
 				roles.push(beoconfig.channels[c].role);
+				muteStates.push(beoconfig.channels[c].mute);
 			}
-			beoCom.send({header: "dsp", content: {type: "speakerTypesAndRoles", speakerTypes: types, speakerRoles: roles}});
+			beoCom.send({header: "dsp", content: {type: "speakerSetup", speakerTypes: types, speakerRoles: roles, muteStates: muteStates}});
 			break;
 		case "listCustomPresets":
 			listCustomSoundPresets();
@@ -226,6 +265,7 @@ function dsp(content) {
 		case "setMute":
 			if (content.mute != undefined) {
 				beoconfig.channels[content.channel].mute = content.mute;
+				beoCom.send({header: "dsp", content: {type: "mute", muteChannel: content.channel, mute: content.mute}});
 				saveConfigurationWithDelay();
 				beoconfig.soundPreset.modified = true;
 				loadDSPSettings(content.channel, "mute");
@@ -313,11 +353,23 @@ function dsp(content) {
 			}
 			break;
 		case "loadCustomPreset":
+			presetIndex = undefined;
 			if (content.presetIndex != undefined) {
+				presetIndex = content.presetIndex;
+			} else {
+				if (content.presetName != undefined) {
+					for (var i = 0; i < soundPresets.length; i++) {
+						if (soundPresets[i].name == content.presetName) {
+							presetIndex = i;
+						}
+					}
+				}
+			}
+			if (presetIndex != undefined) {
 				if (content.settings) {
-					loadCustomSoundPreset(content.presetIndex, content.settings);
+					loadCustomSoundPreset(presetIndex, content.settings);
 				} else {
-					loadCustomSoundPreset(content.presetIndex);
+					loadCustomSoundPreset(presetIndex);
 				}
 			}
 			break;
@@ -379,6 +431,7 @@ function loadCustomSoundPreset(index, settings) {
 				case "crossover":
 					for (var c = 0; c < 4; c++) {
 						beoconfig.channels[c].crossover = Object.assign({}, soundPresets[index].channels[c].crossover);
+						beoconfig.channels[c].type = soundPresets[index].channels[c].type;
 					}
 					break;
 				case "filters":
@@ -412,7 +465,7 @@ function writeCustomSoundPreset(name, fileName) {
 	// Saves a sound preset with current adjustments.
 	newPreset = {name: name, fileName: fileName, toneTouch: Object.assign({}, beoconfig.toneTouch), channels: Object.assign({}, beoconfig.channels)};
 	for (var c = 0; c < 4; c++) {
-		delete newPreset.channels[c].registers;
+		//delete newPreset.channels[c].registers;
 	}
 	fs.writeFileSync(presetFolder+fileName+".json", JSON.stringify(newPreset));
 }
@@ -444,81 +497,83 @@ function loadAllDSPSettings() {
 }
 
 function loadDSPSettings(channel, property, target) {
-	switch (property) {
-		case "crossover":
-			if (target == "hp") {
-				registerPrefix = beoconfig.channels[channel].registers.hpFilterRegisterPrefix;
-				if (beoconfig.channels[channel].crossover.hp != null) {
-					coeffs = beoDSP.highPass(sampleRate, beoconfig.channels[channel].crossover.hp, 0);
-					safeloadWrite([coeffs[5], coeffs[4], coeffs[3], coeffs[2]*-1, coeffs[1]*-1], registerPrefix+".B2_1", true);
-					if (beoconfig.channels[channel].crossover.hpType == "lr24") {
-						safeloadWrite([coeffs[5], coeffs[4], coeffs[3], coeffs[2]*-1, coeffs[1]*-1], registerPrefix+".B2_2", true);
+	if (checksumMatch) {
+		switch (property) {
+			case "crossover":
+				if (target == "hp") {
+					registerPrefix = beoconfig.channels[channel].registers.hpFilterRegisterPrefix;
+					if (beoconfig.channels[channel].crossover.hp != null) {
+						coeffs = beoDSP.highPass(sampleRate, beoconfig.channels[channel].crossover.hp, 0);
+						safeloadWrite([coeffs[5], coeffs[4], coeffs[3], coeffs[2]*-1, coeffs[1]*-1], registerPrefix+".B2_1", true);
+						if (beoconfig.channels[channel].crossover.hpType == "lr24") {
+							safeloadWrite([coeffs[5], coeffs[4], coeffs[3], coeffs[2]*-1, coeffs[1]*-1], registerPrefix+".B2_2", true);
+						}
+					} else {
+						safeloadWrite([0, 0, 1, 0, 0], registerPrefix+".B2_1", true);
+						safeloadWrite([0, 0, 1, 0, 0], registerPrefix+".B2_2", true);
 					}
-				} else {
-					safeloadWrite([0, 0, 1, 0, 0], registerPrefix+".B2_1", true);
-					safeloadWrite([0, 0, 1, 0, 0], registerPrefix+".B2_2", true);
 				}
-			}
-			if (target == "lp") {
-				registerPrefix = beoconfig.channels[channel].registers.lpFilterRegisterPrefix;
-				if (beoconfig.channels[channel].crossover.lp != null) {
-					coeffs = beoDSP.lowPass(sampleRate, beoconfig.channels[channel].crossover.lp, 0);
-					safeloadWrite([coeffs[5], coeffs[4], coeffs[3], coeffs[2]*-1, coeffs[1]*-1], registerPrefix+".B2_1", true);
-					if (beoconfig.channels[channel].crossover.lpType == "lr24") {
-						safeloadWrite([coeffs[5], coeffs[4], coeffs[3], coeffs[2]*-1, coeffs[1]*-1], registerPrefix+".B2_2", true);
+				if (target == "lp") {
+					registerPrefix = beoconfig.channels[channel].registers.lpFilterRegisterPrefix;
+					if (beoconfig.channels[channel].crossover.lp != null) {
+						coeffs = beoDSP.lowPass(sampleRate, beoconfig.channels[channel].crossover.lp, 0);
+						safeloadWrite([coeffs[5], coeffs[4], coeffs[3], coeffs[2]*-1, coeffs[1]*-1], registerPrefix+".B2_1", true);
+						if (beoconfig.channels[channel].crossover.lpType == "lr24") {
+							safeloadWrite([coeffs[5], coeffs[4], coeffs[3], coeffs[2]*-1, coeffs[1]*-1], registerPrefix+".B2_2", true);
+						}
+					} else {
+						safeloadWrite([0, 0, 1, 0, 0], registerPrefix+".B2_1", true);
+						safeloadWrite([0, 0, 1, 0, 0], registerPrefix+".B2_2", true);
 					}
+				}
+				break;
+			case "filter":
+				if (beoconfig.channels[channel].filters[target].enabled) {
+					coeffs = beoDSP.peak(sampleRate, beoconfig.channels[channel].filters[target].Fc, beoconfig.channels[channel].filters[target].boost, beoconfig.channels[channel].filters[target].Q, beoconfig.channels[channel].filters[target].gain);
 				} else {
-					safeloadWrite([0, 0, 1, 0, 0], registerPrefix+".B2_1", true);
-					safeloadWrite([0, 0, 1, 0, 0], registerPrefix+".B2_2", true);
+					coeffs = [1,0,0,1,0,0];
 				}
-			}
-			break;
-		case "filter":
-			if (beoconfig.channels[channel].filters[target].enabled) {
-				coeffs = beoDSP.peak(sampleRate, beoconfig.channels[channel].filters[target].Fc, beoconfig.channels[channel].filters[target].boost, beoconfig.channels[channel].filters[target].Q, beoconfig.channels[channel].filters[target].gain);
-			} else {
-				coeffs = [1,0,0,1,0,0];
-			}
-			registerPrefix = beoconfig.channels[channel].registers.filterRegisterPrefix;
-			safeloadWrite([coeffs[5], coeffs[4], coeffs[3], coeffs[2]*-1, coeffs[1]*-1], registerPrefix+".B2_"+(target+1), true);
-			break;
-		case "invert":
-			register = beoconfig.channels[channel].registers.invertRegister;
-			inverted = beoconfig.channels[channel].invert ? 1 : 0;
-			beoDSP.writeDSP(register, inverted, false, false);
-			break;
-		case "mute":
-			register = beoconfig.channels[channel].registers.muteRegister;
-			enabled = beoconfig.channels[channel].mute ? 0 : 1;
-			beoDSP.writeDSP(register, enabled, false, false);
-			break;
-		case "role":
-			register = beoconfig.channels[channel].registers.roleRegister;
-				switch (beoconfig.channels[channel].role) {
-					case "left":
-						roleIndex = 0;
-						break;
-					case "right":
-						roleIndex = 1;
-						break;
-					case "mono":
-						roleIndex = 2;
-						break;
-					default:
-						roleIndex = 0;
-						break;
+				registerPrefix = beoconfig.channels[channel].registers.filterRegisterPrefix;
+				safeloadWrite([coeffs[5], coeffs[4], coeffs[3], coeffs[2]*-1, coeffs[1]*-1], registerPrefix+".B2_"+(target+1), true);
+				break;
+			case "invert":
+				register = beoconfig.channels[channel].registers.invertRegister;
+				inverted = beoconfig.channels[channel].invert ? 1 : 0;
+				beoDSP.writeDSP(register, inverted, false, false);
+				break;
+			case "mute":
+				register = beoconfig.channels[channel].registers.muteRegister;
+				enabled = beoconfig.channels[channel].mute ? 0 : 1;
+				beoDSP.writeDSP(register, enabled, false, false);
+				break;
+			case "role":
+				register = beoconfig.channels[channel].registers.roleRegister;
+					switch (beoconfig.channels[channel].role) {
+						case "left":
+							roleIndex = 0;
+							break;
+						case "right":
+							roleIndex = 1;
+							break;
+						case "mono":
+							roleIndex = 2;
+							break;
+						default:
+							roleIndex = 0;
+							break;
+					}
+					beoDSP.writeDSP(register, roleIndex, false, false);
+				break;
+			case "msRatio":
+				register = beoconfig.channels[channel].registers.msRegister;
+				msRatio = beoconfig.channels[channel].msRatio;
+				if (msRatio >= 0 && msRatio <= 1) {
+					beoDSP.writeDSP(register, msRatio, true, false);
 				}
-				beoDSP.writeDSP(register, roleIndex, false, false);
-			break;
-		case "msRatio":
-			register = beoconfig.channels[channel].registers.msRegister;
-			msRatio = beoconfig.channels[channel].msRatio;
-			if (msRatio >= 0 && msRatio <= 1) {
-				beoDSP.writeDSP(register, msRatio, true, false);
-			}
-			break;
-		case "toneTouch":
-			break;
+				break;
+			case "toneTouch":
+				break;
+		}
 	}
 }
 
@@ -596,12 +651,27 @@ function getDriverType(range) {
 	return driverType;
 }
 
+function compareDSPChecksum(checksum, callback) {
+	command = "dsptoolkit get-checksum";
+	child_process.exec(command, function(error, stdout, stderr) {
+		if (error) {
+			callback(false, error);
+		} else {
+			if (stdout.indexOf(checksum) != -1) {
+				callback(true);
+			} else {
+				callback(false);
+			}
+		}
+	});
+}
+
 
 // STATUS LED
 
 // Initialise LED
 beoLED.initialise(5, 6, 12);
-beoLED.fadeTo({rgb: [255, 0, 0], speed: "normal"});
+beoLED.fadeTo({rgb: [50, 0, 0], speed: "normal"});
 //beoLED.fadeTo({rgb: [50, 255, 0], speed: "fast"});
 
 
@@ -613,7 +683,7 @@ beoSources.on("wake", function(event) { // Called when the system activates afte
 });
 
 beoSources.on("sleep", function(event) { // Called when the system goes to "standby" after last source deactivates.
-	beoLED.fadeTo({rgb: [255, 0, 0], speed: "fast"});
+	beoLED.fadeTo({rgb: [50, 0, 0], speed: "fast"});
 });
 
 beoSources.on("metadata", function(event) {

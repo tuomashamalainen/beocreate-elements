@@ -115,7 +115,7 @@ function wifiDataReceiver(content) {
 
 function addOtherNetwork() {
 	options = {placeholders: {text: "Network Name", password: "Password"}, minLength: {password: 8}, optional: {password: true}};
-	startTextInput(3, "Add Other", "Enter the name and password of the network you would like to add. If the network has no password, leave it blank.", options, function(details) {
+	startTextInput(3, "Add Network", "Enter the name and password of the network. If the network has no password, leave it blank.", options, function(details) {
 		sendToProduct({header: "wifi", content: {operation: "add", options: {SSID: details.text, password: details.password}}});
 	});
 }
@@ -149,4 +149,32 @@ function removeNetwork(index, confirm) {
 	} else {	
 		sendToProduct({header: "wifi", content: {operation: "remove", ID: savedNetworks[index].ID}});
 	}
+}
+
+
+function wifiSettingsMode(mode) {
+	switch (mode) {
+		case "normal":
+		case "autoHotspot":
+			$(".wifi-not-connected").addClass("hidden");
+			$(".wifi-connected").removeClass("hidden");
+			$("body").removeClass("no-wifi").addClass("has-wifi");
+			notifyDot("wifi");
+			break;
+		case "hotspot":
+			$(".wifi-not-connected").removeClass("hidden");
+			$(".wifi-connected").addClass("hidden");
+			$("body").removeClass("no-wifi").addClass("has-wifi");
+			notifyDot("wifi", "yellow");
+			break;
+		case false:
+			$(".wifi-not-connected").addClass("hidden");
+			$(".wifi-connected").removeClass("hidden");
+			$("body").addClass("no-wifi").removeClass("has-wifi");
+			break;
+	}
+}
+
+function finishWiFi() {
+	sendToProduct({header: "wifi", content: {operation: "setMode", mode: "autoHotspot"}});
 }

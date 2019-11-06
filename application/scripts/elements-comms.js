@@ -1,8 +1,8 @@
 // BANG & OLUFSEN
-// Elements
+// BeoCreate Elements
 
 var products = [];
-var simulation = true;
+var simulation = false; // Use false for normal operation. True to simulate a connection.
 
 var socket;
 var productConnection;
@@ -33,6 +33,12 @@ var showingCachedInfo = false;
 var cachedInfo = [];
 var dataPopulated = false;
 
+
+function connectToCurrentDomain() {
+	productAddress = window.location.hostname;
+	products = [{hostname: productAddress}];
+	connectProduct(0, false);
+}
 
 function loadProductsFromStorageAndConnect() {
 	if (localStorage.beoProducts) {
@@ -404,7 +410,9 @@ function connectProduct(withIndex, autoCycle) {
 			overrideMaxConnectionAttempts = false;
 			productCycleIndex = null;
 			showSoundSystemSelectionScreen(false, true);
-
+			if (localStorage.beoLastSelectedTab) {
+				selectTab(localStorage.beoLastSelectedTab);
+			}
 		};
 
 	} else if (connectionAttemptCount > maxConnectionAttempts) {
@@ -446,6 +454,12 @@ function simulateConnection(withIndex) {
 	$("body").removeClass("disconnected").addClass("connected");
 
 	connected = true;
+	//setTimeout(function() {
+		if (localStorage.beoLastSelectedTab) {
+			selectTab(localStorage.beoLastSelectedTab);
+		}
+	//}, 100)
+	
 	
 }
 
@@ -486,4 +500,23 @@ function handshake(content) {
 	info = {};
 	if (content.systemName) info.systemName = content.systemName;
 	addOrUpdateProduct(selectedProductIndex, info);
+	
+	if (content.wifiMode) {
+		wifiSettingsMode(content.wifiMode);
+	}
+}
+
+function connectedScreen(command) {
+	switch (command) {
+		case "refresh":
+			sendToProduct({header: "connectedScreen", content: {operation: "refresh"}});
+			break;
+		case "animate":
+			sendToProduct({header: "connectedScreen", content: {operation: "passThroughCommand", commandContent: "animate"}});
+			break;
+		case "quitScreen":
+			sendToProduct({header: "connectedScreen", content: {operation: "passThroughCommand", commandContent: "quitScreen"}});
+			break;
+	}
+	
 }

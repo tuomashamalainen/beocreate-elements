@@ -1,5 +1,5 @@
 // BANG & OLUFSEN
-// BeoSound Elements
+// BeoCreate Elements
 
 var windowWidth = 0;
 var windowHeight = 0;
@@ -18,6 +18,15 @@ window.addEventListener('load', function() {
 	drawArc(2, 0, 360, 0);
 	//drawArc(1, 0, 120, 0);
 	getWindowDimensions();
+	
+	if (localStorage.beoCacheTags) {
+		// Load cache tags. With tags, the app can ask the server if it needs to update information, such as sound settings or player metadata. The truth is always on the server.
+		beoCacheTags = JSON.parse(localStorage.beoCacheTags);
+	}
+	//loadProductsFromStorageAndConnect();
+	connectToCurrentDomain();
+	
+	//notifyDot("wifi", "yellow");
 }, false);
 
 var resizeTimeout;
@@ -37,11 +46,7 @@ window.onresize = function() {
 
 };
 
-if (localStorage.beoCacheTags) {
-	// Load cache tags. With tags, the app can ask the server if it needs to update information, such as sound settings or player metadata. The truth is always on the server.
-	beoCacheTags = JSON.parse(localStorage.beoCacheTags);
-}
-loadProductsFromStorageAndConnect();
+
 //if (products) connectProduct(0, true);
 
 //if ($this[0].scrollHeight > $this.innerHeight()) {
@@ -97,6 +102,8 @@ function reloadTabBarIcons(withTheme) {
 
 
 function selectTab(tab) {
+	//if (!configuredTabs) populateTabBar();
+	
 	if (isNaN(tab)) { // Selecting tab with name.
 		newTab = tab;
 		newSelectedTabIndex = null;
@@ -258,6 +265,7 @@ $( ".tab-bar-item.draggable" ).draggable({
 			tabIcons.splice(moveTo, 0, movedTabIcon);
 			
 			reloadTabBarIcons();
+			notifyDot();
 			
 			localStorage.beoConfiguredTabs = JSON.stringify(configuredTabs);
 			localStorage.beoTabIcons = JSON.stringify(tabIcons);
@@ -359,6 +367,7 @@ $( ".tab-bar-capable .menu-icon" ).draggable({
 				}
 				
 				reloadTabBarIcons();
+				notifyDot();
 				
 				localStorage.beoConfiguredTabs = JSON.stringify(configuredTabs);
 				localStorage.beoTabIcons = JSON.stringify(tabIcons);
@@ -387,6 +396,34 @@ $( ".tab-bar-capable .menu-icon" ).draggable({
 	}
 });
 
+var notificationDotFeatures = [];
+var notificationDotColours = [];
+function notifyDot(feature, colour) {
+	if (feature) {
+		// Adding, changing or removing the dot for a specific feature
+		featureNotificationIndex = notificationDotFeatures.indexOf(feature);
+		if (featureNotificationIndex == -1 && colour) {
+			notificationDotFeatures.push(feature);
+			notificationDotColours.push(colour);
+		} else {
+			if (colour) {
+				notificationDotColours[featureNotificationIndex] = colour;
+			} else {
+				// Remove the feature from list
+				notificationDotFeatures.splice(featureNotificationIndex, 1);
+				notificationDotColours.splice(featureNotificationIndex, 1);
+			}
+		}
+	}
+	// Update the dots based on the lists. This can be also done by calling the function without arguments (when rearranging the tab bar, for example)
+	$(".tab-bar-item .notification-dot").removeClass("visible yellow red");
+	for (var i = 0; i < notificationDotFeatures.length; i++) {
+		featureTabBarIndex = configuredTabs.indexOf(notificationDotFeatures[i]);
+		if (featureTabBarIndex != -1) {
+			$("#tab-bar-item-"+featureTabBarIndex+" .notification-dot").addClass("visible "+notificationDotColours[i]);
+		}
+	}
+}
 
 
 
@@ -746,7 +783,7 @@ function menuTransition(fromScreen, toScreen, direction, edgeSwipeReturnScreen) 
 					}
 					break;
 				case "speaker-role-menu":
-					sendToProduct({header: "dsp", content: {operation: "getSpeakerTypesAndRoles"}});
+					sendToProduct({header: "dsp", content: {operation: "getSpeakerSetup"}});
 					break;
 				case "sound-preset-menu":
 					sendToProduct({header: "dsp", content: {operation: "listCustomPresets"}});
