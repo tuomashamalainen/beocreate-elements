@@ -6,10 +6,10 @@
 
 /*
 
-BEOGRAPHER
+GRAPHER
 A new grapher function that can have multiple instances and thus support multiple graphs within the same application.
 
-new BeoGrapher (initialise a new grapher object)
+new Grapher (initialise a new grapher object)
 	Expects the following arguments:
 	* The ID of the magnitude response graph container [string]
 	* The ID of the phase response graph container [string] (optional: supply null to not use it)
@@ -17,14 +17,14 @@ new BeoGrapher (initialise a new grapher object)
 	* A colour for the grid lines [string: any standard CSS colour definition].
 	
 	Example:
-	var graph1 = new BeoGrapher("magContainer", "phaseContainer", ["#FF3E46", "#FFAA46","#2CD5C4", "#2C7FE4"], "rgba(255,255,255,0.05)");
+	var graph1 = new Grapher("magContainer", "phaseContainer", ["#FF3E46", "#FFAA46","#2CD5C4", "#2C7FE4"], "rgba(255,255,255,0.05)");
 
 There are two ways to feed filter information into the grapher and two ways to draw it:
-	* BeoGrapher.store -> used to store information and generate the graphs behind the scenes.
-	* BeoGrapher.draw -> used to draw the requested filter(s).
-	* BeoGrapher.storeAndDraw -> a combination of above functions.
+	* Grapher.store -> used to store information and generate the graphs behind the scenes.
+	* Grapher.draw -> used to draw the requested filter(s).
+	* Grapher.storeAndDraw -> a combination of above functions.
 	
-BeoGrapher.store
+Grapher.store
 	Expects the following arguments:
 	* Channel index [integer]
 	* Filter index within the channel [integer]
@@ -32,14 +32,14 @@ BeoGrapher.store
 	* Inverted: is the phase of the channel inverted? [boolean]
 	-> To speed up drawing when phase is inverted but the filter remains otherwise unchanged, supply only the channel index and 'inverted' boolean. Supply null to the other arguments.
 
-BeoGrapher.draw
+Grapher.draw
 	Expects the following arguments:
 	* Channel index to draw [integer] (optional: supply null to draw all channels with equal prominence)
 	* Filter index within the channel to draw [integer] (optional: supply null to not highlight individual filters)
 	* Graph to draw [integer] (optional: 0 to draw both magnitude and phase responses, 1 to draw magnitude response only, 2 to draw phase response only)
 	
-BeoGrapher.storeAndDraw
-	Expects the arguments from both BeoGrapher.store and BeoGrapher.draw, in the same order.
+Grapher.storeAndDraw
+	Expects the arguments from both Grapher.store and Grapher.draw, in the same order.
 	
 	
 
@@ -47,7 +47,7 @@ BeoGrapher.storeAndDraw
 */
 
 
-function BeoGrapher(magnitudeGraphContainer, phaseGraphContainer, colours, gridColour) {
+function Grapher(magnitudeGraphContainer, phaseGraphContainer, colours, gridColour) {
 	this.graphCount = colours.length; // Amount of graphs
 	
 	// Create palette
@@ -65,7 +65,6 @@ function BeoGrapher(magnitudeGraphContainer, phaseGraphContainer, colours, gridC
 	
 	// Initialise arrays for coefficients and graph points
 	this.filterCoeffs = [];
-	
 	this.filterGraphs = [];
 	this.phaseGraphs = [];
 	this.masterFilterGraphs = [];

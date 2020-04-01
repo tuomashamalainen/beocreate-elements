@@ -2,7 +2,7 @@
 // BeoCreate Elements
 
 var products = [];
-var simulation = false; // Use false for normal operation. True to simulate a connection.
+var simulation = true; // Use false for normal operation. True to simulate a connection.
 
 var socket;
 var productConnection;

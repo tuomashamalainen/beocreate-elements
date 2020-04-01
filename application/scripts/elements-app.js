@@ -23,8 +23,8 @@ window.addEventListener('load', function() {
 		// Load cache tags. With tags, the app can ask the server if it needs to update information, such as sound settings or player metadata. The truth is always on the server.
 		beoCacheTags = JSON.parse(localStorage.beoCacheTags);
 	}
-	//loadProductsFromStorageAndConnect();
-	connectToCurrentDomain();
+	loadProductsFromStorageAndConnect();
+	//connectToCurrentDomain();
 	
 	//notifyDot("wifi", "yellow");
 }, false);
