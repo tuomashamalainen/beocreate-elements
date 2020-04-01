@@ -29,7 +29,7 @@ Beocreate Core was an enclosure designed for Beocreate 4-Channel Amplifier as pa
 The models for building the enclosure are available **for personal use** within the Beocreate Core directory:
 
 - Top case in STEP format, intended to be machined out of 8 mm sheet of aluminium. Screw bosses are intended for M3 threads.
-- Bottom case in STEP format, intended to be machined out of Hi-MACS, Corian, wood, MDF or other similar material.
+- Bottom case in STEP format, intended to be machined out of Hi-MACS, Corian, wood, MDF or other similar material. *Note:* the top case (Core-topcase.step) has an extra protrusion that's incompatible with the bottom case. Remove this during manufacturing.
 - Mask for the connectors in DXF format, intended to be laser-cut out of 3 mm acrylic.
 
 The models correspond to the final version, whose design and assembly are further described in the thesis.
